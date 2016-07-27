@@ -5,10 +5,9 @@ Using AND bit operand for generating Carry-out signal. XOR bit-operand for gener
 */
 
 // Carry-Look-Ahead
+// Carry-Look-Ahead
 int getSum(int a, int b)
 {
-	int carry;
-
 	do
 	{
 		int c = a & b;
