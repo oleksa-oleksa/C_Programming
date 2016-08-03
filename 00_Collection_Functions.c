@@ -1,5 +1,28 @@
 //============================================================================
 /*
+Determine whether an integer is a palindrome. 
+Do this without extra space.
+*/
+bool isPalindrome(int x) 
+{
+    
+    int rev = 0;
+    int num = abs (x);
+
+    while (x != 0)
+    {
+        rev = rev * 10 + x % 10;
+        x = x / 10;
+    }
+    
+    if (rev == num)
+        return 1;
+    else 
+        return 0;
+}
+
+//============================================================================
+/*
 Realisation of Adder (Electronics) to calculate a sum of two integers under conditions when it is prohibited to user + or - signs. 
 Using AND bit operand for generating Carry-out signal. XOR bit-operand for generating a simple sum. 
 */
