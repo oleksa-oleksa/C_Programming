@@ -3,7 +3,7 @@
 Determine whether an integer is a palindrome. 
 Do this without extra space.
 */
-bool isPalindrome(int x) 
+int isPalindrome(int x)
 {
     
     int rev = 0;

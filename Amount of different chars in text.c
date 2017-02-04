@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include "escapesequenzen.h"
 #include "tools.h"
 
 // FUNKTIONS
