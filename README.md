@@ -2,6 +2,6 @@
 
 Language: C
 
-Functions for University
-Functions for submit at leetcode.com
-Functions for fun
+- Functions for University
+- Functions for submit at leetcode.com
+- Functions for fun
