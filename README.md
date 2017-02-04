@@ -1,2 +1,7 @@
 # C_Programming
-C-files, functions, submissions from leetcode.com
+
+Language: C
+
+Functions for University
+Functions for submit at leetcode.com
+Functions for fun
