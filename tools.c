@@ -73,7 +73,7 @@ int askYesOrNo(char *pPrompt)
     int readCharacters;
     do
     {
-        //   Beispielausgabe("Möchten Sie noch einmal? (j/n) ", 'I');
+        //   pPromt is a sample, for example: Do you want to repeat? (y / n):
         printf("%s", pPrompt);
         readCharacters = scanf("%c", &input);
         clearBuffer();
@@ -94,7 +94,7 @@ int askYesOrNo(char *pPrompt)
 ***************************************************************************/
 void waitForEnter ()
 {
-    printf("Bitte die Eingabetaste drücken...");
+    printf("Press Enter to Continue");
     char isValid = '0';
     while (isValid != 'r' && isValid != '\n')
     {
@@ -152,7 +152,6 @@ void getText(char *pInfoText, int maxInput, char **pTargetText, short isAllowedE
                 input = 1;
 
         } while (!input);
-        //*(pInputString + maxInput + 1) = '\n';
 
         pTargetString = malloc(strlen(pInputString) * sizeof(char));
 
@@ -160,7 +159,6 @@ void getText(char *pInfoText, int maxInput, char **pTargetText, short isAllowedE
 
         *pTargetText = pTargetString;
         free(pInputString);
-        //free(pTargetString);
     }
 
     else
