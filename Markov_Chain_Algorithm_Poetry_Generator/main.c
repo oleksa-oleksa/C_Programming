@@ -205,7 +205,7 @@ void generate (int nwords) {
 int main (void)
 {
 
-    int i , nwords = MAXGEN ;
+    int i, nwords = MAXGEN ;
 
     char *prefix[NPREF]; /* current input prefix */
 
@@ -214,7 +214,7 @@ int main (void)
 
     build(prefix, stdin);
 
-    add (prefix , NONWORD);
+    add (prefix, NONWORD);
 
     generate(nwords);
 
