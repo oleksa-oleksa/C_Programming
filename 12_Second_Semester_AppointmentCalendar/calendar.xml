@@ -1,0 +1,15 @@
+<Calendar>
+<Appointment>
+<Date>06.01.2017</Date>
+<Time>10:00</Time>
+<Description>Informatik Submit Task 5</Description>
+<Location>Beuth</Location>
+</Appointment>
+<Appointment>
+<Date>06.01.2017</Date>
+<Time>18:30</Time>
+<Duration>02:00</Duration>
+<Description>Ukrainian Christmas</Description>
+<Location>Charlottenburg</Location>
+</Appointment>
+</Calendar>

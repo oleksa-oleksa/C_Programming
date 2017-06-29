@@ -1,0 +1,77 @@
+<Calendar>
+<Appointment>
+<Date>06.01.2017</Date>
+<Time>10:00</Time>
+<Description>Informatik Submit Task 5</Description>
+<Location>Beuth</Location>
+</Appointment>
+<Appointment>
+<Date>06.01.2017</Date>
+<Time>18:30</Time>
+<Duration>02:00</Duration>
+<Description>Ukrainian Christmas</Description>
+<Location>Charlottenburg</Location>
+</Appointment>
+<Appointment>
+<Date>15.01.2017</Date>
+<Time>18:00</Time>
+<Duration>00:45</Duration>
+<Description>Jogging</Description>
+<Location>Charlottenburg</Location>
+</Appointment>
+<Appointment>
+<Date>10.02.2017</Date>
+<Time>08:00</Time>
+<Description>Informatk Exam</Description>
+<Location>Beuth</Location>
+</Appointment>
+<Appointment>
+<Date>20.02.2017</Date>
+<Time>18:00</Time>
+<Description>Pause</Description>
+</Appointment>
+<Appointment>
+<Date>24.02.2017</Date>
+<Time>10:30</Time>
+<Duration>01:00</Duration>
+<Description>Jogging in Schlosspark</Description>
+<Location>Berlin</Location>
+</Appointment>
+<Appointment>
+<Date>24.02.2017</Date>
+<Time>18:00</Time>
+<Description>Birthsday Party with friends</Description>
+<Location>Berlin</Location>
+</Appointment>
+<Appointment>
+<Date>17.03.2017</Date>
+<Time>14:30</Time>
+<Duration>01:45</Duration>
+<Description>St Patric Day</Description>
+<Location>Kreuzberg</Location>
+</Appointment>
+<Appointment>
+<Date>25.05.2017</Date>
+<Time>09:00</Time>
+<Duration>02:45</Duration>
+<Description>Flight to Italy</Description>
+<Location>Berlin</Location>
+</Appointment>
+<Appointment>
+<Date>29.05.2017</Date>
+<Time>18:45</Time>
+<Description>Flight to Berlin</Description>
+<Location>Milan</Location>
+</Appointment>
+<Appointment>
+<Date>02.06.2017</Date>
+<Time>17:00</Time>
+<Description>Summer Fest</Description>
+</Appointment>
+<Appointment>
+<Date>19.06.2017</Date>
+<Time>14:30</Time>
+<Description>Some long text for testing if the text will be cut properly to be printed on the screen of my beauti</Description>
+<Location>Mitte</Location>
+</Appointment>
+</Calendar>
