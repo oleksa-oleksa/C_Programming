@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:nsd="http://structorizer.fisch.lu/" version="3.24-11" text="&#34;Uebung 6 - Trigonometrische Funktionen&#34;" comment="" color="ffffff" type="program" style="nice">
+	<children>
+		<repeat text="&#34;Menuauswahl ist nicht gleich 9 (Programmende)?&#34;" comment="&#34;Wenn &#34;&#34;ja&#34;&#34; - wiederholen&#34;,&#34;wenn &#34;&#34;nein&#34;&#34; (ist gleich 9) - Programmende &#34;" color="ffff80">
+			<qRepeat>
+				<instruction text="&#34;Bildschirm klaeren&#34;" comment="" color="ffffff" rotated="0"></instruction>
+				<instruction text="&#34;Menu ausgeben.&#34;,&#34;Menuuwahl --&#62; die Zahl einlesen&#34;,&#34;&#34;,&#34;Aswahl 9 ist gleich Programmende&#34;" comment="" color="ffffff" rotated="0"></instruction>
+				<repeat text="&#34;Benutzer hat 1,2,3 oder 9 NICHT gewaehlt?&#34;,&#34;Wenn ja (hat NICHT gewaelt - wiederholen Eingabe&#34;" comment="" color="80ff80">
+					<qRepeat>
+						<instruction text="&#34;die Nummer der Auswahl von Benutzer ist eingegeben&#34;" comment="" color="ffffff" rotated="0"></instruction>
+						<instruction text="&#34;Die entsprechende Zahl der Auswahl wird gespeichert&#34;" comment="" color="ffffff" rotated="0"></instruction>
+						<repeat text="&#34;Wenn es immer noch etwas in Tastaturpuffer gibt&#34;" comment="" color="c0c0c0">
+							<qRepeat>
+								<instruction text="&#34;Speichern uebrig Symbole in variable Dummy&#34;" comment="" color="c0c0c0" rotated="0"></instruction>
+							</qRepeat>
+						</repeat>
+						<alternative text="&#34;wurde Zahl eingegeben?&#34;" comment="&#34;&#34;" color="ffffff">
+							<qTrue>
+								<case text="&#34;Auswahl von Benutzer ist gueltig? &#34;,&#34;1&#34;,&#34;2&#34;,&#34;3&#34;,&#34;9&#34;,&#34;else&#34;" comment="" color="ffffff">
+									<qCase>
+										<instruction text="&#34;Print &#34;&#34;Sinus&#34;&#34;&#34;" comment="" color="ffffff" rotated="0"></instruction>
+									</qCase>
+									<qCase>
+										<instruction text="&#34;Print &#34;&#34;Cosinus&#34;&#34;&#34;" comment="" color="ffffff" rotated="0"></instruction>
+									</qCase>
+									<qCase>
+										<instruction text="&#34;Print &#34;&#34;Tangens&#34;&#34;&#34;" comment="" color="ffffff" rotated="0"></instruction>
+									</qCase>
+									<qCase>
+										<instruction text="&#34;Print &#34;&#34;Programende&#34;&#34;&#34;" comment="" color="ffffff" rotated="0"></instruction>
+									</qCase>
+									<qCase>
+										<instruction text="&#34;Ungueltige Eingabe&#34;" comment="" color="ffffff" rotated="0"></instruction>
+									</qCase>
+								</case>
+							</qTrue>
+							<qFalse>
+							</qFalse>
+						</alternative>
+					</qRepeat>
+				</repeat>
+				<alternative text="&#34;Wenn Programm NICHT beended sein muss &#34;,&#34;(kein 9 war eingegeben))&#34;" comment="" color="ffffff">
+					<qTrue>
+						<repeat text="&#34;Hat Benutzer KEIN gueltig Eingabe eingegeben?&#34;" comment="" color="80ffff">
+							<qRepeat>
+								<instruction text="&#34;Startwert Von_x erfragen&#34;" comment="" color="ffffff" rotated="0"></instruction>
+								<repeat text="&#34;Wenn es immer noch etwas in Tastaturpuffer gibt&#34;" comment="" color="c0c0c0">
+									<qRepeat>
+										<instruction text="&#34;Speichern uebrig Symbole in variable Dummy&#34;" comment="" color="c0c0c0" rotated="0"></instruction>
+									</qRepeat>
+								</repeat>
+							</qRepeat>
+						</repeat>
+						<repeat text="&#34;Hat Benutzer KEIN gueltig Eingabe eingegeben?&#34;" comment="" color="80ffff">
+							<qRepeat>
+								<instruction text="&#34;Endwert Bis_x erfragen&#34;" comment="" color="ffffff" rotated="0"></instruction>
+								<repeat text="&#34;Wenn es immer noch etwas in Tastaturpuffer gibt&#34;" comment="" color="c0c0c0">
+									<qRepeat>
+										<instruction text="&#34;Speichern uebrig Symbole in variable Dummy&#34;" comment="" color="c0c0c0" rotated="0"></instruction>
+									</qRepeat>
+								</repeat>
+								<alternative text="&#34;wurde Zahl eingegeben?&#34;" comment="&#34;&#34;" color="ffffff">
+									<qTrue>
+										<alternative text="&#34;Ausgabegrenzen pruefen&#34;,&#34;Von_x ist grosser als Bis_x?&#34;" comment="&#34;&#34;" color="ffffff">
+											<qTrue>
+												<instruction text="&#34;Eingabe ist falsh&#34;,&#34;Bis_x muss noch einmal eingegen werden&#34;" comment="" color="ffffff" rotated="0"></instruction>
+											</qTrue>
+											<qFalse>
+											</qFalse>
+										</alternative>
+									</qTrue>
+									<qFalse>
+									</qFalse>
+								</alternative>
+							</qRepeat>
+						</repeat>
+						<repeat text="&#34;Hat Benutzer KEINE Zahl eingegeben?&#34;,&#34;Wiederholer die Abfrage bis die Zahl eingegeben werden wird.&#34;" comment="" color="80ffff">
+							<qRepeat>
+								<instruction text="&#34;&#34;&#34;Ihre Wahl&#34;&#34; an Bildschirn ausdrueken&#34;" comment="" color="ffffff" rotated="0"></instruction>
+								<instruction text="&#34;Die Zahl der Schtittweite einliest&#34;" comment="" color="ffffff" rotated="0"></instruction>
+								<repeat text="&#34;Wenn es immer noch etwas in Tastaturpuffer gibt&#34;" comment="" color="c0c0c0">
+									<qRepeat>
+										<instruction text="&#34;Speichern uebrig Symbole in variable Dummy&#34;" comment="" color="c0c0c0" rotated="0"></instruction>
+									</qRepeat>
+								</repeat>
+							</qRepeat>
+						</repeat>
+						<instruction text="&#34;Überschrift der Ausgabe an Bildschirm ausdruecken&#34;" comment="" color="ffffff" rotated="0"></instruction>
+						<for text="&#34;pour X &#60;- Von_X à Bis_X&#34;" comment="" counterVar="X" startValue="Von_X" endValue="Bis_X" stepConst="1" style="COUNTER" color="ffffff">
+							<qFor>
+								<case text="&#34;Welche Funkrion hat Benuter gewaelt?&#34;,&#34;1&#34;,&#34;2&#34;,&#34;3&#34;" comment="" color="ffffff">
+									<qCase>
+										<instruction text="&#34;Print X&#34;,&#34;entsprechend des Sinus&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+									</qCase>
+									<qCase>
+										<instruction text="&#34;Print X&#34;,&#34;entsprechend des Cosinus&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+									</qCase>
+									<qCase>
+										<instruction text="&#34;Print X&#34;,&#34;entsprechend des Tanges&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+									</qCase>
+								</case>
+							</qFor>
+						</for>
+						<instruction text="&#34;Der nuen Wert fur Eingabe einsetzen&#34;" comment="" color="ffffff" rotated="0"></instruction>
+						<repeat text="&#34;Wenn es immer noch etwas in Tastaturpuffer gibt&#34;" comment="" color="c0c0c0">
+							<qRepeat>
+								<instruction text="&#34;Speichern uebrig Symbole in variable Dummy&#34;" comment="" color="c0c0c0" rotated="0"></instruction>
+							</qRepeat>
+						</repeat>
+					</qTrue>
+					<qFalse>
+					</qFalse>
+				</alternative>
+			</qRepeat>
+		</repeat>
+	</children>
+</root>
