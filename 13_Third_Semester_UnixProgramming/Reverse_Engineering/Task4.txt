@@ -1,0 +1,71 @@
+Aufgabe 1
+
+SYNC
+
+#include <unistd.h>
+
+int main(){
+
+        sync();
+        return 0;
+}
+
+================================================
+
+Aufgabe 2
+
+WHOAMI
+
+
+#include <unistd.h>
+#include <sys/types.h>
+#include <stdio.h>
+#include <pwd.h>
+
+int main(){
+        uid_t userID;
+        struct passwd *userName;
+        userID = geteuid();
+        userName = getpwuid(userID);
+
+        puts(userName->pw_name);
+        return 0;
+}
+
+
+===================================
+
+Aufgabe 3
+
+PWD
+
+#include <unistd.h>
+#include <stdio.h>
+#define PATH 256 // 255 + 1
+int main(){
+        char *workDir;
+        char path[PATH];
+        workDir = getcwd(path, PATH);
+        puts(workDir);
+        return 0;
+}
+
+
+=========================================
+
+Aufgabe 4
+
+TTY
+
+#include <unistd.h>
+#include <stdio.h>
+
+int main(){
+        char *tty;
+        tty = ttyname(0);
+        puts(tty);
+        return 0;
+}
+        
+
+

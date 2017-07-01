@@ -1,0 +1,15 @@
+CC = gcc
+WARNFLAGS = -W -Wall -Werror
+OPTFLAGS = -O3
+DEBUGFLAGS = -ggdb3
+CFLAGS = $(WARNFLAGS)
+
+OBJ = sync
+
+all: $(OBJ)
+
+$(OBJ): $(OBJ).c
+$(CC) $(CFLAGS) -o $(OBJ) $(OBJ).c
+
+clean:
+$(RM) $(OBJ)
