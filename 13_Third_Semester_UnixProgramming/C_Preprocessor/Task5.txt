@@ -1,0 +1,221 @@
+Aufgabe 1:
+
+#pragma once
+#ifndef HELLO_H
+#define HELLO_H HELLO_H
+#endif
+
+void sayHi(char *c);
+
+------------
+
+#pragma once
+#ifndef BYE_H
+#define BYE_H BYE_H
+#endif
+
+void sayBye(char *c);
+
+------------
+bye.c and hallo.c have function calls
+
+#include <stdio.h>
+#include "hello.h"
+
+void sayHi(char *c){
+
+        printf("Hello, %s!\n", c);
+}
+
+-----------
+
+#include <unistd.h>
+#include <sys/types.h>
+#include <stdio.h>
+#include <pwd.h>
+
+int main (){
+
+        uid_t userID;
+        struct passwd *userName;
+        userID = geteuid();
+        userName = getpwuid(userID);
+
+        sayHi(userName->pw_name);
+        sayBye(userName->pw_name);
+
+        return 0;
+
+}
+
+=========================================
+
+Aufgabe 2
+
+
+#define SWAP(x, y)\
+        int z = x;\
+        x = y;\ 
+        y = z;
+ 
+#define LSB(x) x & 1 
+
+int main (){
+        int x = 1;
+        int y = 4;
+        printf("x is %d and y is %d\n", x, y);
+        printf("LSB %d is %d\n", x, LSB(x));
+        printf("LSB %d is %d\n", y, LSB(y));
+        SWAP(x,y);
+        printf("x is now %d and y is now %d\n", x, y);
+        printf("LSB %d is %d\n", x, LSB(x));
+        printf("LSB %d is %d\n", y, LSB(y));
+        return 0;
+}
+
+========================================
+
+Aufgabe 3
+
+#include <stdio.h>
+#define DOUBLED_PI 3.14 + 3.14
+#define ADD(a, b) ((a) + (b))
+#define MULT(a, b) ((a) * (b))
+
+#define ADD_ERROR(a, b) (a) + (b) // error case: 3 * ADD(a, b) - wrong result
+                                  // instead of 3 * (2 + 3) = 15
+                                  // will be 3 * 2 + 3 = 9 
+#define MULT_ERROR(a, b) (a * b) // error case: MULT(2 + a, b) - wrong result
+                                 // MULT (2 + a, b) - wrong result
+                                // instead of (2 + 2) * 3 = 12
+                                // will be 2 + (2 * 3) = 8
+
+int main(){
+        int f = 3200; // Hz
+        int a = 2;
+        int b = 3;
+
+        printf("%.2f\n", DOUBLED_PI * f);
+        printf("Here should be 15, the result is: %d\n", 3 * ADD_ERROR(a, b));
+        printf("Here should be 15, the result is: %d\n", 3 * ADD(a, b));
+	printf("Here should be 12, the result is: %d\n", MULT_ERROR(2 + a, b));
+        printf("Here should be 12, the result is: %d\n", MULT(2 + a, b));
+
+        return 0;
+}
+
+
+=====================================================================
+
+Aufgabe 4
+
+// normal compilation
+// gcc -Wall -o kinda_project kinda_project.c
+
+
+// compilation with DEBUG macros
+// gcc -DDEBUG -Wall -o kinda_project kinda_project.c
+// where -D is flag and DEBUG is name
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "awesome.h"
+
+#if (__awesome_ver < 2)
+#error "The program requeres awesome.h ver. 2 and newer..."
+#endif
+
+int main(){
+
+        #ifdef DEBUG
+                puts("starting");
+        #endif
+
+        #if (__awesome_ver == 3)
+                do_something_awesome(42);
+        #else
+                something_awesome(42);
+        #endif
+
+        #ifdef DEBUG
+                puts("done");
+        #endif
+        return EXIT_SUCCESS;
+
+}
+
+
+================================================
+
+Aufgabe 05
+
+// by compilation set the OS:
+// gcc -D__DOORS_10__ -o multi_platform multi_platform.c
+// run the program:
+// ./multi_platform 2 4 8
+// The result is: 14
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#ifdef __BIRNE_X__
+        typedef long type;
+        long getTerm(char *par){
+                long x = atol(par);
+                return x;
+        }
+        void printDigit(long res){
+                printf("The result is: %li\n", res);
+        }
+#endif
+
+#ifdef __LOCKED_BSE__
+        typedef int type;
+        int getTerm(char *par){
+                int x = atoi(par);
+                return x;
+        }
+        void printDigit(int res){
+                printf("The result is: %d\n", res);
+        }
+
+#endif
+
+#ifdef __DOORS_10__
+        typedef short type;
+        short getTerm(char *par){
+                short x = atoi(par);
+                return x;
+        }
+        void printDigit(short res){
+                printf("The result is: %hi\n", res);
+        }
+#endif
+
+int main (int argc, char *argv[]){
+
+        if (argc == 4){
+
+                type a = getTerm(argv[1]);
+                type b = getTerm(argv[2]);
+                type c = getTerm(argv[3]);
+
+                type result = a + b + c;
+
+                printDigit(result);
+        }
+
+        else {
+
+                printf("The program argv[0] requires three digits!\n");
+                return -1;
+        }
+	
+	#ifdef __BANANA_MAC__
+        #pragma GCC error "Unsupported operation system."
+        #endif
+        return 0;
+}
+
