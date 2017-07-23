@@ -6,7 +6,7 @@
 
 int main(int args, char *argv[]) {
 
-    char *buff[BUF_LEN];
+    char buff[BUF_LEN];
     int len;
     if (args != 2) {
         printf("reverse <src-file>\n");
@@ -23,21 +23,17 @@ int main(int args, char *argv[]) {
     // while not the end of the file - read
     len = read(fd, buff, BUF_LEN);
     close(fd);
-    char tmpLast[] = buff;
-    char copyItem[];
-    write(1, *buff, len);		
-    while (*tmpLast){
-	tmpLast++;
-    }	
-    tmpLast--;
-    
-    while(buff < tmpLast){
-	copyItem = *buff;
-	*buff = *tmpLast;
-	*buff = copyItem;
-	buff++;
+    char *tmpLast = buff+len;
+
+    char copyItem;
+    char *head = buff;
+    while(head < tmpLast){
+	copyItem = *head;
+	*head = *tmpLast;
+	*tmpLast = copyItem;
+	head++;
 	tmpLast--;
     }
-    write(1, *buff, len); 
+    write(1, buff, len); 
     return 0;
 }

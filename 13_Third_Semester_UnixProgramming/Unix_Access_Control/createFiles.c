@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <sys/stat.h>
 
-int getmode(char *par) {
+int getFileMode(char *par) {
     int rights =0;
     while(*par) {
         rights = rights << 3;
@@ -21,7 +21,7 @@ int main(int args, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    int rights = getmode(argv[2]);
+    int rights = getFileMode(argv[2]);
 
     int fd = open(argv[1], O_CREAT | O_EXCL, rights);
     if (fd < 0) {

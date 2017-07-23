@@ -5,7 +5,7 @@
 #define BUF_LEN 4096
 
 int main(int args, char *argv[]){
-	char *buff[BUF_LEN];
+	char buff[BUF_LEN];
 	if (args != 2){
 		printf("fd_copy <filename>\n");
 		return EXIT_FAILURE;
