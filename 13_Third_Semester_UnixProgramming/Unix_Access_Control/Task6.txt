@@ -1,0 +1,157 @@
+Aufgabe 01:
+
+
+
+       | calculator.exe  |  manuscript.txt  |   tagebuch.docx |
+______________________________________________________________
+
+ALICE  |    rwx (111)    |    --- (000)     |    --- (000)    |
+______________________________________________________________
+
+BOB    |   r-x (101)     |    rw- (110)     |    --- (000)    |
+______________________________________________________________
+
+CAROL  |  r-x (101)      |    rw- (110)     |    rw- (110)    |
+______________________________________________________________
+
+
+addgroup tagebuch
+adduser alice tagebuch
+chown carol:tagebuch tagebuch.docx
+chmod 640 tagebuch.docx
+
+
+setfacl -m u:alice:r tagebuch.docx
+setfacl -x u:alice:rx calculator.exe
+
+
+=============================================
+
+
+Aufgabe 02
+
+touch foo
+chmod 720 foo
+touch bar.txt
+chmod 664
+touch baz
+chmod 551
+
+================================================
+
+Aufgage 03
+
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <sys/stat.h>
+
+int main(int args, char *argv[]){
+
+        int rights = 0; 
+        if(args != 3){
+        printf("createFiles filename rights");
+        return EXIT_FAILURE;
+        }
+        
+        char *par = argv[2];
+        printf("%c\n", argv[1][1])
+
+        while(*par){
+                rights = rights << 3;
+                rights = rights | (*par -'0');
+                par++;
+        }
+        
+        int fd = open(argv[1], O_CREAT | O_EXCL, rights);
+        if (fd < 0){
+                perror(argv[1]);
+                return EXIT_FAILURE;
+        }
+        return EXIT_SUCCESS;
+}
+
+=================================================
+
+Aufgabe 04
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#define BUF_LEN 4096
+
+int main(int args, char *argv[]){
+
+        char *buff[BUF_LEN];
+        int len;
+        if (args != 3){
+                printf("append <src-file> <dst-file>\n");
+                return EXIT_FAILURE;
+        }
+
+        // open source and destination files
+        int fdS = open(argv[1], O_RDONLY);
+        if (fdS < 0){
+                printf("Error opening source file.\n");
+                return EXIT_FAILURE;
+        }       
+
+        int fdD = open(argv[2], O_WRONLY | O_APPEND);
+        if (fdD < 0){
+                printf("Error opening destination file.\n");
+                return EXIT_FAILURE;
+        }
+
+        // read and write
+        // while not the end of the file - read
+        while((len = read(fdS, buff, BUF_LEN)) > 0){
+                write(fdD, buff, len);
+        }
+        close(fdS);
+        close(fdD);
+        return 0;
+}
+
+=========================================================
+
+Aufgabe 5
+
+====================================================
+
+Aufgabe 6
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#define BUF_LEN 4096
+
+int main(int args, char *argv[]){
+        char *buff[BUF_LEN];
+        if (args != 2){
+                printf("fd_copy <filename>\n");
+                return EXIT_FAILURE;
+        }
+        int fd1 = open(argv[1], O_RDONLY);
+        printf("fd1 = %d\n", fd1);
+        int fd2 = dup(fd1);
+        printf("fd2 = %d\n", fd2);
+        int fd3 = open(argv[1], O_RDONLY);
+        printf("fd3 = %d\n", fd3);
+        int fd4 = dup(fd3);
+        printf("fd4 = %d\n", fd4);
+        int fd1_off = read(fd1, buff, 5);
+        int fd2_off = lseek(fd2, 0, SEEK_CUR);
+        int fd3_off = read(fd3, buff, 17);
+        int fd4_off = lseek(fd4, 0, SEEK_CUR);
+        printf("offset fd1 = %d; offset fd2 = %d\n", fd1_off, fd2_off);
+        printf("offset fd3 = %d; offset fd4 = %d\n", fd3_off, fd4_off);
+        close(fd1);
+        close(fd2);
+        close(fd3);
+        close(fd4);
+        return 0;
+}
+
