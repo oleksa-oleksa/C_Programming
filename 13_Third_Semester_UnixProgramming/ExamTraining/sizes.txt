@@ -1,0 +1,10 @@
+168K	./Unix_Access_Control
+160K	./C_Preprocessor
+96K	./Reverse_Engineering
+32K	./Linux_Shell
+24K	./Linux_Shell/foobar
+20K	./Bash_Programming/backup
+18M	./Bash_Programming
+18M	.
+16K	./ExamTraining
+12K	./Unix_Access_Control/swp
