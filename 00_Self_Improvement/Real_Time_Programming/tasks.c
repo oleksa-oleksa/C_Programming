@@ -22,17 +22,16 @@ void scheduler()
 		// if it the task with a highest priority and it is ready to execute
 		if ((arrTasksTable[i].priority <= highPriorityTask) && (arrTasksTable[i].ready == 1))			
 		{
-			currentRunningTask = i;				
+			//call the task with the high priority
+			(*arrTasksTable[i].pTaskAddr)();
 		}
 		// if the task with highest priority is not ready
 		// the lower priority task may start
 		if ((arrTasksTable[i].priority > highPriorityTask) && (arrTasksTable[i].ready == 1))
 		{
-			currentRunningTask = i;				
+			(*arrTasksTable[i].pTaskAddr)();
 		}
 	}	
-	//call the task with the high priority
-	(*arrTasksTable[currentRunningTask].pTaskAddr)();
 }
 
 void createTask(void (*pTaskAddr) (void), int taskPriority, int taskId)
@@ -42,14 +41,20 @@ void createTask(void (*pTaskAddr) (void), int taskPriority, int taskId)
 	arrTasksTable[taskCounter].priority = taskPriority; 
 	arrTasksTable[taskCounter].taskId = taskId;
 	// set the ready status
-	arrTasksTable[taskCounter].ready = 0;
+	arrTasksTable[taskCounter].ready = 1;
 
 	taskCounter++;
 }
 
-void waitTask()
+void waitTask(int taskId)
 {
-	arrTasksTable[currentRunningTask].ready = 0;
+		for (int i = 0; i < taskCounter; i++)
+	{
+		if (taskId == arrTasksTable[i].taskId)
+		{
+			arrTasksTable[i].ready = 0;
+		}
+	}
 	scheduler();
 }
 

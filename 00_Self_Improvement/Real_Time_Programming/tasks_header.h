@@ -5,6 +5,9 @@
 
 #ifndef TASKS_HEADER_H_
 #define TASKS_HEADER_H_
+#define TASK_ID1 100
+#define TASK_ID2 200
+#define TASK_ID3 300
 #endif
 
 typedef struct {
@@ -17,7 +20,7 @@ typedef struct {
 void startOS();
 void scheduler();
 void createTask(void (*pTaskAddr) (void), int taskPriority, int taskId);
-void waitTask();
+void waitTask(int taskId);
 void startTask(int taskId);
 
 extern int taskPriority;
