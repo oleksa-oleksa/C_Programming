@@ -7,13 +7,31 @@
  */
 void p_switch_state(TProcess *p)
 {
+    // toggles running => ready
     if (p->p_state = 1)
     {
         p->p_state = 0;
     }
-
+    // toggles ready => running
     else if (p->p_state = 0)
     {
-        p-p_state = 1;
+        p->p_state = 1;
+    }
+}
+
+
+void p_print(TProcess *p) {
+    char *currentState[] = {"READY", "RUNNING", "NOT A STATE"};
+    TState tmpState = p->p_state;
+
+    if (tmpState >= 0 && tmpState <= STATE_MODEL) // no negative number for state is considering
+    {
+        printf("The process ID %d is %s.", p->p_id, currentState[tmpState]);
+    }
+
+    else // of state is a negative number or the number is greater then amount of states
+    {
+        tmpState = NOT_A_STATE;
+        printf("Warning! %s is detected for the process ID %d", currentState[tmpState], p->p_id);
     }
 }
