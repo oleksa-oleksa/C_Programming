@@ -1,8 +1,20 @@
 CFLAGS += -W -Wall
-all: process_test
+all: queue process tools qdemo prsim
 
-process_test: process_test.o
-	$(CC) process_test.c -o process_test
+queue: queue.o
+	$(CC) queue.c -o queue
+
+process: process.o
+	$(CC)  process.c -o process
+
+tools: tools.o
+	$(CC) tools.c -o tools
+
+qdemo: queuedemo.o
+	$(CC) process.c queue.c tools.c queuedemo.c -o queuedemo
+
+prsim: process_simulation.c
+	$(CC) process_simulation.c -o process_simulation
 
 clean: 
-	$(RM) *.o process_test.o
+	$(RM) *.o 
