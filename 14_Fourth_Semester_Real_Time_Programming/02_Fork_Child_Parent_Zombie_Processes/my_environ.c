@@ -3,24 +3,41 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
+#include "tools.h"
 #include "tools.h"
 #include "menu.h"
 
 extern char **environ;
 
-print_environList(){
+
+void print_environList(){
+    clearScreen();
     while (*environ){
         puts(*environ++); //post-increment
     }
+    waitForEnter();
 }
 
-print_environEntry(){
-    
+void print_environEntry(){
+    char *environ_entry;
+    getText("What do you want to know about your environment?:\n", &environ_entry);
 }
 
+void add_environEntry(){
 
-int main (int argv, char *args[]){
+}
+
+void modify_environEntry(){
+
+}
+
+void remove_environEntry(){
+
+}
+
+int main (){
 
     clearScreen();
 

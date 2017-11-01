@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "tools.h"
 #include "escapesequenzen.h"
 
@@ -68,4 +70,43 @@ void waitForEnter ()
     {
         isValid = (char) getchar();
     }
+}
+
+/***************************************************************************
+*  function:    getText
+***************************************************************************/
+void getText(char *pInfoText, char **pTargetText){
+    int isValid;
+    char *pInputString = malloc((10) * sizeof(char)); // reserves a place in memory for user´s input
+    char *pTargetString = NULL;
+    char readFormat[100];
+    printf("%s", pInfoText);
+
+    if (pInputString != NULL) // if memory was allocated
+    {
+        do {
+            isValid = scanf(readFormat, pInputString);
+            clearBuffer();
+        } while (!isValid);
+    }
+    pTargetString = malloc(strlen(pInputString) * sizeof(char));
+
+    strcpy(pTargetString, pInputString);
+
+    *pTargetText = pTargetString;
+    free(pInputString);
+}
+
+/***************************************************************************
+*  function:    printLine
+***************************************************************************/
+void printLine(char printedChar, int amount)
+{
+    int i;
+
+    for (i = 0; i < amount; i++)
+    {
+        printf("%c", printedChar);
+    }
+    printf("\n");
 }

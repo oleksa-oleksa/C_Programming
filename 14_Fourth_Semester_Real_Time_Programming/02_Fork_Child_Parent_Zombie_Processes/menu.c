@@ -4,13 +4,14 @@
 #include <string.h>
 #include "escapesequenzen.h"
 
-int getMenu(char *pTitle, char **pItems, unsigned int amount)
+int getMenu(char *pTitle, char **pItems, int amount)
 {
     int isValid = 0;
     int choice;
     do
     {
         int i = 0;
+        printLine('=', (strlen(pTitle) + 1));
         printf("\n%s \n", pTitle);
         printLine('=', (strlen(pTitle) + 1));
         printf("\n");

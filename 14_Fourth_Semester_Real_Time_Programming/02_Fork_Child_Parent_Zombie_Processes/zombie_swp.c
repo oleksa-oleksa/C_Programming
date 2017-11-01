@@ -12,13 +12,6 @@
 
 int main(int args, char *argv[]) {
 
-    if (args != 2)
-    {
-        printf("Command line argument is required: "
-                       "positive number for a generation of zombie processes, -1 for unlimited amount of zombies\n");
-        return EXIT_FAILURE;
-    }
-
     int k = atoi(argv[1]);
     int n = k;
 
@@ -28,10 +21,17 @@ int main(int args, char *argv[]) {
 
     pid_t pids[k];
 
+    if (args != 2)
+    {
+        printf("Command line argument is required: "
+                       "positive number for a generation of zombie processes, -1 for unlimited amount of zombies\n");
+        return EXIT_FAILURE;
+    }
+
     printf("%s is started\n", argv[0]);
 
-    if (n >= 0) {
-        for (int i = 0; i < k; i++) {
+    if (k >= 0) {
+        for (int i = k - 1; i >= 0; i--) {
             pids[i] = fork();
 
             if (pids[i] < FAILURE) {
@@ -39,19 +39,20 @@ int main(int args, char *argv[]) {
 
             } else if (pids[i] == CHILD) {
                 printf("The new child PID %u / PPID %u\n", getpid(), getppid());
+                sleep(i+1);
                 _exit(1);
             }
         }
-    } else {
+    }
+    else if (k == -1) {
         while (1) {
-            for (int x = 0; x < 20; x++) {
-                if (fork() == 0) {
-                    exit(1);
-                }
-            }
-            sleep(1);
+
         }
     }
-    sleep(100);
+
+    for (int i = k-1; i > 0; i--) {
+        waitpid(pids[i], NULL, 0);
+    }
+
     return EXIT_SUCCESS;
 }

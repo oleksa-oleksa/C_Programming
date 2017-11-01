@@ -1,5 +1,5 @@
 CFLAGS += -W -Wall
-all: orphan orpan2 tools
+all: tools menu orphan orpan2 zombie my_environ
 
 orphan: orphan_reaping.o
 	$(CC) $(CFLAGS) tools.c orphan_reaping.c -o orphan_reaping
@@ -9,6 +9,13 @@ orphan2: orphan_reaping_goodbye.o
 
 zombie: zombie.o
 	$(CC) $(CFLAGS) zombie.c -o zombie
+
+my_environ: my_environ.o
+	$(CC) $(CFLAGS) tools.c menu.c my_environ.c -o my_environ
+
+# my libs
+menu: menu.o
+	$(CC) $(CFLAGS) menu.c -o menu
 
 tools: tools.o
 	$(CC) tools.c -o tools

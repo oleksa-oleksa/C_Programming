@@ -8,5 +8,4 @@
  *               int anz: the amount of items
  *  result :     the chosen item
  ***************************************************************************/
-int getMenu(char *, char **, unsigned int);
-#endif
+int getMenu(char *, char **, int);
