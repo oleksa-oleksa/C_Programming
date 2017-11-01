@@ -20,6 +20,19 @@ void parentExitStatus()
     puts("The parent process is now dead.\n");
 }
 
+void processSaysGoodbye()
+{
+    char *owner = getlogin();
+    if (owner)
+    {
+        printf("\nGoodbye %s\n\n", owner);
+    }
+    else
+    {
+        perror("getlogin() failed by exit");
+    }
+}
+
 int main(int args, char *argv[])
 {
     int new_ppid = 0;
@@ -46,6 +59,7 @@ int main(int args, char *argv[])
         {
 
             printf("\nI am a CHILD. I've got a new parent - init with ID %u\n", new_ppid);
+            atexit(processSaysGoodbye);
             return EXIT_SUCCESS;
         }
     }
@@ -56,6 +70,7 @@ int main(int args, char *argv[])
         sleep(1);
         // placing exit-handler
         atexit(parentExitStatus);
+        atexit(processSaysGoodbye);
         printf("Parent is dying, child is still alive\n");
 
         return EXIT_SUCCESS;
