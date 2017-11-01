@@ -7,6 +7,9 @@ orphan: orphan_reaping.o
 orphan2: orphan_reaping_goodbye.o
 	$(CC) $(CFLAGS) tools.c orphan_reaping_goodbye.c -o orphan_reaping_goodbye
 
+zombie: zombie.o
+	$(CC) $(CFLAGS) zombie.c -o zombie
+
 tools: tools.o
 	$(CC) tools.c -o tools
 
