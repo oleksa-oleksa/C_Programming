@@ -8,32 +8,42 @@
 TPctx *ctx_new(TQueue *q)
 {
     TPctx *ctx = malloc(sizeof(TPctx));
-    ctx->qready = q;
-    ctx->running = q->start->process;
+    if (ctx) {
+        ctx->qready = q;
+        ctx->running = NULL;
+        return ctx;
+    }
+    else {
+        perror("Memory allocation problem");
+    }
     return ctx;
 }
 
 void print(TPctx *ctx){
-    char *currentState[] = {"READY", "RUNNING", "NOT A STATE"};
-
-    TProcess *current = ctx->running;
-    printf("Current running process is %d (state %s)\n", current->p_id, currentState[current->p_state]);
-
-    printf("Process waiting list:\n");
+    printf("Running process: ");
+    p_print(ctx->running);
     q_print(ctx->qready);
 }
 
-void step(TPctx *ctx){
+void step(TPctx *ctx) {
     if (ctx == NULL){
         return;
     }
+/*    if (ctx->running == NULL){
+        TProcess *p_newRunning = q_remove(ctx->qready);
+        p_switch_state(p_newRunning);
+    }
+    else {
+        p_switch_state(ctx->running);
+    } */
+    TProcess *p_newReady = ctx->running;
+    q_add(ctx->qready, p_newReady);
 
-    ctx->running->p_state = READY;
-    TProcess *p = q_remove(ctx->qready);
-    q_add(ctx->qready, p);
-    ctx->running = ctx->qready->start->process;
-    ctx->running->p_state = RUNNING;
+    TProcess *p_newRunning = q_remove(ctx->qready);
+    p_switch_state(p_newRunning);
 
+    ctx->running = p_newRunning;
 }
+
 
 

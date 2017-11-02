@@ -9,11 +9,10 @@
 
 void createTestProcesses(TProcess **processes, int processNumber){
 
-    srand(time(NULL));
 
     // creating 10 test processes
     for (int i = 0; i < processNumber; i++) {
-        processes[i] = createProcess(rand() % MAX_PID, READY);
+        processes[i] = createProcess(i+1, READY);
     }
     printf("%d demo processes were created\n", AMOUNT_OF_PROCESSES);
     waitForEnter();
@@ -41,9 +40,7 @@ int main()
         ctxDemo = ctx_new(queueDemoStruct);
 
         while(1) {
-            printf("Step\n");
             step(ctxDemo);
-            printf("Step 2\n");
             print(ctxDemo);
             sleep(3);
         };

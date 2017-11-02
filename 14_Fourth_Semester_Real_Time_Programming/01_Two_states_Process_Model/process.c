@@ -9,14 +9,14 @@
 void p_switch_state(TProcess *p)
 {
     // toggles running => ready
-    if (p->p_state == 1)
+    if (p->p_state == RUNNING)
     {
-        p->p_state = 0;
+        p->p_state = READY;
     }
     // toggles ready => running
-    else if (p->p_state == 0)
+    else if (p->p_state == READY)
     {
-        p->p_state = 1;
+        p->p_state = RUNNING;
     }
 }
 
@@ -33,7 +33,7 @@ void p_print(TProcess *p) {
     else // of state is a negative number or the number is greater then amount of states
     {
         tmpState = NOT_A_STATE;
-        printf("Warning! %s is detected for the process ID %d\n", currentState[tmpState], p->p_id);
+        fprintf(stderr,"Error! Invalid state is detected for the process ID %d\n", p->p_id);
     }
 }
 
@@ -46,8 +46,10 @@ TProcess *createProcess(uint32_t p_id, TState p_state)
     {
         tmpProcess->p_id = p_id;
         tmpProcess->p_state = p_state;
+#ifdef DEBUG
         printf("New process was created: ");
         p_print(tmpProcess);
+#endif
         return tmpProcess;
     }
     else

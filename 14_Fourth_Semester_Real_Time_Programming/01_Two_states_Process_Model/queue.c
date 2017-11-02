@@ -33,40 +33,25 @@ void q_add(TQueue *q, TProcess *p)
     {
         return;
     }
+    TQ_node *newNode = malloc(sizeof(TQ_node));
+    if (newNode == NULL)
+    {
+        printf("Memory allocation error for process ID %d\n", p->p_id);
+        return;
+    }
+    newNode->next = NULL;
+    newNode->process = p;
 
     // Queue is empty => the first and only one process will be added
     if (q_isEmpty(q))
     {
-        TQ_node *newNode = malloc(sizeof(TQ_node));
-
-        if (newNode == NULL)
-        {
-            printf("Memory allocation error for process ID %d\n", p->p_id);
-            return;
-        }
-
-        newNode->next = NULL;
-        newNode->process = p;
-
         q->start = newNode;
-        q->end = newNode;
     }
     else // if queue is not empty
     {
-
-        TQ_node *newNode = malloc(sizeof(TQ_node));
-
-        if (newNode == NULL)
-        {
-            printf("Memory allocation error for process ID %d\n", p->p_id);
-            return;
-        }
-        newNode->next = NULL;
-        newNode->process = p;
-
         q->end->next = newNode; // moves next on the new p
-        q->end = newNode; // places the new end of the queue
     }
+    q->end = newNode; // places the new end of the queue
 }
 
 TProcess *q_remove(TQueue *q)
