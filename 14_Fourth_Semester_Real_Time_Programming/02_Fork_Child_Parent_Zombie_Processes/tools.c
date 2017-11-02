@@ -79,13 +79,12 @@ void getText(char *pInfoText, char **pTargetText){
     int isValid;
     char *pInputString = malloc((10) * sizeof(char)); // reserves a place in memory for user´s input
     char *pTargetString = NULL;
-    char readFormat[100];
     printf("%s", pInfoText);
 
     if (pInputString != NULL) // if memory was allocated
     {
         do {
-            isValid = scanf(readFormat, pInputString);
+            isValid = scanf("%30s", pInputString);
             clearBuffer();
         } while (!isValid);
     }

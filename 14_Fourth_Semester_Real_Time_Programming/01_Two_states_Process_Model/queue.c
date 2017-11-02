@@ -7,6 +7,14 @@ int q_isEmpty(TQueue *q)
     return (q->start == NULL) && (q->end == NULL);
 }
 
+TQueue *q_new()
+{
+    TQueue *q = malloc(sizeof(TQueue));
+    q->start = NULL;
+    q->end = NULL;
+    return q;
+}
+
 int q_length(TQueue *q)
 {
     int len = 0;

@@ -8,6 +8,8 @@ typedef struct
     TProcess *running;
 } TPctx;
 
+TPctx *ctx_new(TQueue *q);
+
 // Human-readable information
 void print(TPctx *ctx);
 

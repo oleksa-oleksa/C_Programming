@@ -15,6 +15,7 @@ typedef struct SQueue
     TQ_node *end;
 } TQueue;
 
+TQueue *q_new();
 void q_add(TQueue *q, TProcess *p);
 TProcess *q_remove(TQueue *q);
 void q_print(TQueue *q);

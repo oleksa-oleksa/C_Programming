@@ -59,5 +59,6 @@ int main()
 
         } while (askYesOrNo("Do you want to repeat? [ y / n] : "));
     }
+    free(queueDemoStruct);
     return EXIT_SUCCESS;
 }

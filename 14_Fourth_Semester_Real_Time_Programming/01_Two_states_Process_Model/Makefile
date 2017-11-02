@@ -14,7 +14,7 @@ qdemo: queuedemo.o
 	$(CC) $(CFLAGS) process.c queue.c tools.c queuedemo.c -o queuedemo
 
 prsim: process_simulation.c
-	$(CC) $(CFLAGS) process_simulation.c -o process_simulation
+	$(CC) $(CFLAGS) tools.c process.c queue.c processmodel.c process_simulation.c -o process_simulation
 
 clean: 
 	$(RM) *.o 

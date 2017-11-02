@@ -25,7 +25,7 @@ void p_print(TProcess *p) {
     char *currentState[] = {"READY", "RUNNING", "NOT A STATE"};
     TState tmpState = p->p_state;
 
-    if (tmpState <= STATE_MODEL) // no negative number for state is considering
+    if (tmpState < STATE_MODEL) // no negative number for state is considering
     {
         printf("The process ID %d is %s.\n", p->p_id, currentState[tmpState]);
     }

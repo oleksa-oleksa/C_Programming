@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "tools.h"
 #include "tools.h"
@@ -18,22 +19,76 @@ void print_environList(){
         puts(*environ++); //post-increment
     }
     waitForEnter();
+    clearScreen();
 }
 
 void print_environEntry(){
     char *environ_entry;
     getText("What do you want to know about your environment?:\n", &environ_entry);
+    printf("OK...\n");
+    for (size_t i = 0; i < strlen(environ_entry); i++) {
+        *(environ_entry + i) = toupper(*(environ_entry + i));
+    }
+    char *res = getenv(environ_entry);
+    if (res){
+        printf("%s = %s\n", environ_entry, res);
+    }
+    else {
+        printf("%s not found\n", environ_entry);
+    }
+    waitForEnter();
+    clearScreen();
 }
 
 void add_environEntry(){
+    char *environ_entry;
+    getText("What do you want to set in your environment? (NAME=param):\n", &environ_entry);
+    printf("OK...");
+    putenv(environ_entry);
+    printf("Done!\n");
+    waitForEnter();
+    clearScreen();
 
 }
-
 void modify_environEntry(){
+    char *environ_entry, *environ_value;
+    getText("Environment Variable NAME:\n", &environ_entry);
+    getText("Environment Variable value:\n", &environ_value);
+
+    printf("OK...\n");
+    for (size_t i = 0; i < strlen(environ_entry); i++) {
+        *(environ_entry + i) = toupper(*(environ_entry + i));
+    }
+    char *res = getenv(environ_entry);
+    if (res){
+        printf("%s is already exists! ", environ_entry);
+        if(askYesOrNo("Do you want to overwrite? [ y / n ]: \n")){
+            setenv(environ_entry, environ_value, 1);
+            printf("%s was updated/modified\n", environ_entry);
+        }
+        else {
+            printf("Canceled.\n");
+        }
+    }
+    else {
+        setenv(environ_entry, environ_value, 0);
+        printf("New %s was added\n", environ_entry);
+
+    }
+    waitForEnter();
+    clearScreen();
 
 }
 
 void remove_environEntry(){
+    char *environ_entry;
+    getText("What do you want to delete from your environment? (NAME):\n", &environ_entry);
+    printf("OK...");
+    unsetenv(environ_entry);
+    printf("Done!\n");
+    puts(getenv(environ_entry));
+    waitForEnter();
+    clearScreen();
 
 }
 
@@ -46,7 +101,7 @@ int main (){
                     "Print environment enrty (getenv)",
                     "Add environment entry (putenv)",
                     "Modify environment entry (setenv)",
-                    "Remove environment entry (unsetenv",
+                    "Remove environment entry (unsetenv)",
                     "End"};
 
     do {
