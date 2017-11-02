@@ -42,7 +42,7 @@ int main()
         while(1) {
             step(ctxDemo);
             print(ctxDemo);
-            sleep(3);
+            sleep(1);
         };
     }
     free(queueDemoStruct);

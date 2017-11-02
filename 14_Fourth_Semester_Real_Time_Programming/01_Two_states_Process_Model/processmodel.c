@@ -29,19 +29,15 @@ void step(TPctx *ctx) {
     if (ctx == NULL){
         return;
     }
-/*    if (ctx->running == NULL){
-        TProcess *p_newRunning = q_remove(ctx->qready);
-        p_switch_state(p_newRunning);
-    }
-    else {
+// Case 1
+//Case 2:
+    if(ctx->running != NULL) {
         p_switch_state(ctx->running);
-    } */
-    TProcess *p_newReady = ctx->running;
-    q_add(ctx->qready, p_newReady);
+        q_add(ctx->qready, ctx->running);
+    }
 
     TProcess *p_newRunning = q_remove(ctx->qready);
     p_switch_state(p_newRunning);
-
     ctx->running = p_newRunning;
 }
 
