@@ -19,7 +19,9 @@ int main() {
         perror("fork() failed\n");
     }
     if (p > CHILD) {
-        sleep(10);
+        // Grandpa
+        printf("Grandpa: %d\n", getpid());
+        sleep(100);
         waitpid(p, NULL, 0);
     }
     if (p == CHILD) {
@@ -29,6 +31,8 @@ int main() {
             perror("fork-2 failed\n");
         }
         if(s > CHILD){
+            // Father
+            printf("Dad: %d\n", getpid());
             exit(0);
         }
         if (s == CHILD) {
