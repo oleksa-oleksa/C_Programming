@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <pwd.h>
 
 #include "tools.h"
 
@@ -22,15 +23,11 @@ void parentExitStatus()
 
 void processSaysGoodbye()
 {
-    char *owner = getlogin();
-    if (owner)
-    {
-        printf("\nGoodbye %s\n\n", owner);
-    }
-    else
-    {
-        perror("getlogin() failed by exit");
-    }
+   
+    struct passwd *userName;
+    uid_t userID = geteuid();
+    userName = getpwuid(userID);
+    printf("\nGoodbye %s\n\n", userName->pw_name);
 }
 
 int main(int args, char *argv[])
@@ -51,7 +48,7 @@ int main(int args, char *argv[])
     if (p == CHILD)
     {
         printf("I am a happy child process: PID %u / PPID %u\n", getpid(), getppid());
-        while (new_ppid != 1) {
+        while (new_ppid != 1 && new_ppid != 1601) {
             new_ppid = getppid();
         };
 
@@ -62,6 +59,13 @@ int main(int args, char *argv[])
             atexit(processSaysGoodbye);
             return EXIT_SUCCESS;
         }
+	else
+        {
+           printf("\nI am a CHILD on UBUNTU. My new parent is upstart with ID %u\n", new_ppid);
+           atexit(processSaysGoodbye);
+           return EXIT_SUCCESS;
+        }
+
     }
 
     if (p > CHILD)

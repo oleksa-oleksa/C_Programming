@@ -38,16 +38,25 @@ int main(int args, char *argv[])
     if (p == CHILD)
     {
         printf("I am a happy child process: PID %u / PPID %u\n", getpid(), getppid());
-        while (new_ppid != 1) {
+        while (new_ppid != 1 && new_ppid != 1601) {
             new_ppid = getppid();
+#ifdef DEBUG
+	    printf("%u", new_ppid);
+#endif
         };
 
         if (new_ppid == 1)
         {
 
-            printf("\nI am a CHILD. I've got a new parent - init with ID %u\n", new_ppid);
+            printf("\nI am a CHILD. My new parent is init with ID %u\n", new_ppid);
             return EXIT_SUCCESS;
         }
+
+	else
+	{
+	   printf("\nI am a CHILD on UBUNTU. My new parent is upstart with ID %u\n", new_ppid);
+	   return EXIT_SUCCESS;
+	}
     }
 
     if (p > CHILD)
