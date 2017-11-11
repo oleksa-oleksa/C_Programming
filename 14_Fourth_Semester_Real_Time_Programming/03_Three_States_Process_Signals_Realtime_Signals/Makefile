@@ -13,5 +13,5 @@ tools: tools.o
 prsim: process_simulation.c
 	$(CC) $(CFLAGS) tools.c process.c queue.c processmodel.c process_simulation.c -o process_simulation
 
-clean: 
+clean:
 	$(RM) *.o 
