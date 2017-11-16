@@ -5,6 +5,7 @@
 typedef struct pctx_t
 {
     queue *qready;
+    queue *qblocked;
     process *running;
 } pctx;
 

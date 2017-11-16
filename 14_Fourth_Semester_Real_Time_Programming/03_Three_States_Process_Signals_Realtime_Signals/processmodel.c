@@ -20,9 +20,12 @@ pctx *ctx_new(queue *q)
 }
 
 void print(pctx *ctx){
-    printf("Running process: ");
+    printf("Running process:\n");
     p_print(ctx->running);
+    printf("Ready processes ");
     q_print(ctx->qready);
+    printf("Blocked processes ");
+    q_print(ctx->qblocked);
 }
 
 void step(pctx *ctx) {

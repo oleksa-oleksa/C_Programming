@@ -77,14 +77,14 @@ void waitForEnter ()
 ***************************************************************************/
 void getText(char *pInfoText, char **pTargetText){
     int isValid;
-    char *pInputString = malloc((10) * sizeof(char)); // reserves a place in memory for user´s input
+    char *pInputString = malloc((1001) * sizeof(char)); // reserves a place in memory for user´s input
     char *pTargetString = NULL;
     printf("%s", pInfoText);
 
     if (pInputString != NULL) // if memory was allocated
     {
         do {
-            isValid = scanf("%30s", pInputString);
+            isValid = scanf("%1000s", pInputString);
             clearBuffer();
         } while (!isValid);
     }

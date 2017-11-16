@@ -15,8 +15,11 @@ extern char **environ;
 
 void print_environList(){
     clearScreen();
-    while (*environ){
-        puts(*environ++); //post-increment
+
+    char **tmpEnv = environ;
+
+    while (*tmpEnv){
+        puts(*tmpEnv++); //post-increment
     }
     waitForEnter();
     clearScreen();
@@ -24,7 +27,7 @@ void print_environList(){
 
 void print_environEntry(){
     char *environ_entry;
-    getText("What do you want to know about your environment?:\n", &environ_entry);
+    getText("What do you want to know about your environment?: ", &environ_entry);
     printf("OK...\n");
     for (size_t i = 0; i < strlen(environ_entry); i++) {
         *(environ_entry + i) = toupper(*(environ_entry + i));
@@ -42,7 +45,7 @@ void print_environEntry(){
 
 void add_environEntry(){
     char *environ_entry;
-    getText("What do you want to set in your environment? (NAME=param):\n", &environ_entry);
+    getText("What do you want to set in your environment? (NAME=param): ", &environ_entry);
     printf("OK...");
     putenv(environ_entry);
     printf("Done!\n");
@@ -84,6 +87,9 @@ void remove_environEntry(){
     char *environ_entry;
     getText("What do you want to delete from your environment? (NAME):\n", &environ_entry);
     printf("OK...");
+    for (size_t i = 0; i < strlen(environ_entry); i++) {
+        *(environ_entry + i) = toupper(*(environ_entry + i));
+    }
     unsetenv(environ_entry);
     printf("Done!\n");
     puts(getenv(environ_entry));

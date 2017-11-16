@@ -83,7 +83,7 @@ void q_print(queue *q)
     int count = 1;
     q_node *tmpNode = q->start;
 
-    printf("The current queue:\n");
+    printf("queue:\n");
     while (tmpNode != NULL)
     {
         printf("%02d. Process ID %d\n", count++, tmpNode->process->p_id);
