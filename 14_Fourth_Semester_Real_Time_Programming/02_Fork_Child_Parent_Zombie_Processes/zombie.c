@@ -25,7 +25,7 @@ int main(int args, char *argv[]) {
     if (n == -1) {
         k = 1;
     }
-
+/test text bla bla
     pid_t pids[k];
 
     printf("%s is started\n", argv[0]);
