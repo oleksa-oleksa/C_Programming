@@ -1,4 +1,3 @@
-// new header
 // Created by Oleksandra Baga on 01.11.17.
 // Task: program should create k Zombie-processes (k is a command line argument)
 // if k = -1 => so many zombies as possible. What will happen? Explain the behaviour.
@@ -26,8 +25,7 @@ int main(int args, char *argv[]) {
     if (n == -1) {
         k = 1;
     }
-//test text bla bla
-    //this is a total new file please load this
+
     pid_t pids[k];
 
     printf("%s is started\n", argv[0]);
