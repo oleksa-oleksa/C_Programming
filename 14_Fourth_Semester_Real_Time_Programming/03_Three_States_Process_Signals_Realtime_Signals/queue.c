@@ -9,15 +9,15 @@ void signal_usr(int signo){
 
     // SIGUSR1 moves a process to the blocked queue
     if (signo == SIGUSR1) {
-        printf("received SIGUSR1\n");
-        q_add(dflt_pctx.qblocked);
+        printf("received SIGUSR1 pointed at: %p\n", dflt_pctx);
+        p_block_state(dflt_pctx->running);
     }
 
     // SIGUSR2 removes a process from the blocked queue
     else if (signo == SIGUSR2) {
         printf("received SIGUSR2\n");
+        p_unblock_state(dflt_pctx->running);
     }
-
 }
 
 

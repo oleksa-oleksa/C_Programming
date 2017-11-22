@@ -19,6 +19,8 @@ typedef struct process_t
 } process;
 
 void p_switch_state(process *p);
+void p_block_state(process *p);
+void p_unblock_state(process *p);
 
 void p_print(process *p);
 

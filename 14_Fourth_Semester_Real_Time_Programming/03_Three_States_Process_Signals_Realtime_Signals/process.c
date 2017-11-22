@@ -2,15 +2,14 @@
 #include <time.h>
 #include "process.h"
 #include "tools.h"
+#include "processmodel.h"
 
 /* it is enough for this task "Two states process model
  * use a simple statement: p->p_state = !p->p_state;
  */
-void p_switch_state(process *p)
-{
+void p_switch_state(process *p) {
     // toggles running => ready
-    if (p->p_state == RUNNING)
-    {
+    if (p->p_state == RUNNING) {
         p->p_state = READY;
     }
     // toggles ready => running
@@ -20,14 +19,41 @@ void p_switch_state(process *p)
     }
 }
 
+void p_block_state(process *p) {
+    if (p == NULL){
+        printf("Here is a zero\n");
+        return;
+    }
+    if (p->p_state == RUNNING) {
+        p->p_state = BLOCKED;
+        dflt_pctx->running = NULL;
+        q_add(dflt_pctx->qblocked, p);
+    }
+    else {
+        perror("No running process detected\n");
+    }
+}
+
+void p_unblock_state(process *p) {
+    if (p->p_state == BLOCKED){
+        p->p_state = READY;
+        q_remove(dflt_pctx->qblocked);
+        q_add(dflt_pctx->qready, p);
+    }
+}
+
 
 void p_print(process *p) {
+    if (p == NULL){
+        printf("No currently running process\n");
+        return;
+    }
     char *currentState[] = {"READY", "RUNNING", "BLOCKED", "NOT A STATE"};
     state tmpState = p->p_state;
 
     if (tmpState < STATE_MODEL) // no negative number for state is considering
     {
-        printf("The process ID %d is %s.\n", p->p_id, currentState[tmpState]);
+        printf("The process ID %d is %s.\n\n", p->p_id, currentState[tmpState]);
     }
 
     else // of state is a negative number or the number is greater then amount of states

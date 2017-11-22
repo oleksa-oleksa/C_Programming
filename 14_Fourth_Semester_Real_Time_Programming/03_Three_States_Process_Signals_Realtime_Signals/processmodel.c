@@ -5,11 +5,15 @@
 #include "processmodel.h"
 #include "process.h"
 
-pctx *ctx_new(queue *q)
+pctx *dflt_pctx;
+
+
+pctx *ctx_new(queue *q, queue *b)
 {
     pctx *ctx = malloc(sizeof(pctx));
     if (ctx) {
         ctx->qready = q;
+        ctx->qblocked = b;
         ctx->running = NULL;
         return ctx;
     }
@@ -22,14 +26,18 @@ pctx *ctx_new(queue *q)
 void print(pctx *ctx){
     printf("Running process:\n");
     p_print(ctx->running);
-    printf("Ready processes ");
+    printf("Ready processes:\n");
     q_print(ctx->qready);
-    printf("Blocked processes ");
+    printf("Blocked processes:\n");
     q_print(ctx->qblocked);
 }
 
 void step(pctx *ctx) {
     if (ctx == NULL){
+        return;
+    }
+
+    if (ctx->running == NULL && ctx->qready->start == NULL){
         return;
     }
 
@@ -41,6 +49,8 @@ void step(pctx *ctx) {
     process *p_newRunning = q_remove(ctx->qready);
     p_switch_state(p_newRunning);
     ctx->running = p_newRunning;
+
+
 }
 
 

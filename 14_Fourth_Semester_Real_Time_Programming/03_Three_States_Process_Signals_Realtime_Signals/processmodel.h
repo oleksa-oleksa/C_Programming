@@ -11,9 +11,9 @@ typedef struct pctx_t
     process *running;
 } pctx;
 
-static pctx dflt_pctx;
+extern pctx *dflt_pctx;
 
-pctx *ctx_new(queue *q);
+pctx *ctx_new(queue *q, queue *b);
 
 // Human-readable information
 void print(pctx *ctx);
