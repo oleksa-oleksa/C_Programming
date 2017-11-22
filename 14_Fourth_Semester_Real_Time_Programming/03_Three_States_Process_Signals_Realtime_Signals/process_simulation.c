@@ -28,16 +28,23 @@ void addTestProcessIntoQueue(queue *queue, process **processes, int processNumbe
 
 int main()
 {
-    queue *queueDemoStruct = q_new();
+    signal(SIGUSR1, signal_usr);
+    signal(SIGUSR2, signal_usr);
+
+    queue *queueDemoStructReady= q_new();
+    queue *queueDemoStructBlocked = q_new();
     pctx *ctxDemo = NULL;
 
-    if (queueDemoStruct)
+    if (queueDemoStructReady)
     {
         process *processList[AMOUNT_OF_PROCESSES];
         createTestProcesses(processList, AMOUNT_OF_PROCESSES);
-        addTestProcessIntoQueue(queueDemoStruct, processList, AMOUNT_OF_PROCESSES);
+        addTestProcessIntoQueue(queueDemoStructReady, processList, AMOUNT_OF_PROCESSES);
 
-        ctxDemo = ctx_new(queueDemoStruct);
+        dflt_pctx.qready = queueDemoStructReady;
+        dflt_pctx.qblocked = queueDemoStructBlocked;
+
+        ctxDemo = ctx_new(queueDemoStructReady);
 
         while(1) {
             step(ctxDemo);
@@ -45,7 +52,7 @@ int main()
             sleep(1);
         };
     }
-    free(queueDemoStruct);
+    free(queueDemoStructReady);
     free(ctxDemo);
     return EXIT_SUCCESS;
 }

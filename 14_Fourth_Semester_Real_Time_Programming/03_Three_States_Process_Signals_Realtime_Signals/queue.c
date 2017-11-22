@@ -1,6 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h>
+
 #include "queue.h"
+#include "processmodel.h"
+
+void signal_usr(int signo){
+
+    // SIGUSR1 moves a process to the blocked queue
+    if (signo == SIGUSR1) {
+        printf("received SIGUSR1\n");
+        q_add(dflt_pctx.qblocked);
+    }
+
+    // SIGUSR2 removes a process from the blocked queue
+    else if (signo == SIGUSR2) {
+        printf("received SIGUSR2\n");
+    }
+
+}
+
 
 int q_isEmpty(queue *q)
 {

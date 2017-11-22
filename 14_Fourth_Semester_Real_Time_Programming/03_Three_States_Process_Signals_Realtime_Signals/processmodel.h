@@ -2,12 +2,16 @@
 #include "queue.h"
 #include "process.h"
 
+
+
 typedef struct pctx_t
 {
     queue *qready;
     queue *qblocked;
     process *running;
 } pctx;
+
+static pctx dflt_pctx;
 
 pctx *ctx_new(queue *q);
 
