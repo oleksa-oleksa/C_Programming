@@ -13,5 +13,8 @@ tools: tools.o
 prsim: process_simulation.c
 	$(CC) $(CFLAGS) tools.c process.c queue.c processmodel.c process_simulation.c -o process_simulation
 
+svss: signal_VS_realtime_signal.o
+	$(CC) $(CFLAGS) signal_VS_realtime_signal.c -o signal_VS_realtime_signal
+
 clean:
 	$(RM) *.o 
