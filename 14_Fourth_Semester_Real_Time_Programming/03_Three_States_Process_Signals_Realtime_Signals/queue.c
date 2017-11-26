@@ -16,7 +16,7 @@ void signal_usr(int signo){
     // SIGUSR2 removes a process from the blocked queue
     else if (signo == SIGUSR2) {
         printf("received SIGUSR2\n");
-        p_unblock_state(dflt_pctx->running);
+        q_unblock(dflt_pctx->qblocked, dflt_pctx->qready);
     }
 }
 
@@ -90,6 +90,17 @@ process *q_remove(queue *q)
     process *deProcess = deNode->process;
     free(deNode);
     return deProcess;
+}
+
+void q_unblock(queue *b, queue *r) {
+    // q_remove will check if the queue is empty, the condition added for a visual information
+    if (b->start == NULL) {
+        printf("No blocked process found\n");
+        return;
+    }
+    process *unblockedTmp = q_remove(b);
+    unblockedTmp->p_state = READY;
+    q_add(r, unblockedTmp);
 }
 
 void q_print(queue *q)

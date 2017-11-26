@@ -4,9 +4,6 @@
 #include "tools.h"
 #include "processmodel.h"
 
-/* it is enough for this task "Two states process model
- * use a simple statement: p->p_state = !p->p_state;
- */
 void p_switch_state(process *p) {
     // toggles running => ready
     if (p->p_state == RUNNING) {
@@ -31,14 +28,6 @@ void p_block_state(process *p) {
     }
     else {
         perror("No running process detected\n");
-    }
-}
-
-void p_unblock_state(process *p) {
-    if (p->p_state == BLOCKED){
-        p->p_state = READY;
-        q_remove(dflt_pctx->qblocked);
-        q_add(dflt_pctx->qready, p);
     }
 }
 

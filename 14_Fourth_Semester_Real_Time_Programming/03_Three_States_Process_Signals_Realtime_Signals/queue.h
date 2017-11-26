@@ -18,6 +18,7 @@ typedef struct queue_t
 queue *q_new();
 void q_add(queue *q, process *p);
 process *q_remove(queue *q);
+void q_unblock(queue *b, queue *r);
 void q_print(queue *q);
 int q_length(queue *q);
 void signal_usr(int signo);
