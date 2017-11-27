@@ -12,14 +12,14 @@ PID and UID of sending process is written to si_pid and si_uid fields of siginfo
 
 void handler(int signum) {
     if(signum == SIGUSR1) {
-        puts("SIGUSR1 intercepted.\n");
+        printf("SIGUSR1 intercepted.\n");
     }
     signal(SIGUSR1, SIG_DFL);
 }
 
 void handler_realTime(int signum, siginfo_t *si, void *data){
-    if (signum == SIGINT) {
-        puts("RealTime Signal for Mac OS intercepted.\n");
+    if (signum == SIGRTMIN + 5) {
+        printf("RealTime Signal %d intercepted. Data: %p\n", si->si_value.sival_int, data);
     }
 }
 
@@ -34,25 +34,27 @@ int main() {
     sigemptyset(&act.sa_mask);
     /* The signal handler takes three arguments, not one.  In this case, sa_sigaction should be set instead of sa_handler.*/
     act.sa_flags = SA_SIGINFO;
-    sigaction(SIGINT, &act, NULL); // Mac OS Solution for a task
+    sigaction(SIGRTMIN + 5, &act, NULL); // Task is to be presented In UBUNTU
+					 // No Real Time Signal Support on MacOS
 
+    union sigval v;
+    v.sival_int = 10;
+    
     // Regular Signal Settings
     sigset_t set, signalset;
     signal(SIGUSR1, handler);
     sigaddset(&signalset, SIGUSR1);
-    printf("PID: %u\n", getpid());
-
-
+    sigaddset(&signalset, SIGRTMIN + 5);
     while(1) {
         /* The sigprocmask() function examines and/or changes the current signal mask (those signals that are blocked from delivery).
          * Signals are blocked if they are members of the current signal mask set.*/
         sigprocmask(SIG_BLOCK, &signalset, NULL);
         puts("Signals blocking: activated\n");
-        printf("Please sent SIGUSR1 to a PID: %u or wait for RT Signal message.\n", getppid());
+        printf("Please sent SIGUSR1 to a PID: %u or wait for RT Signal message.\n", getpid());
 
         sleep(10);
         // SENDING REAL TIME SIGNAL
-        sigqueue(getppid(), SIGINT, 10);
+        sigqueue(getppid(), SIGINT, v);
         printf("RT signal was sent\n");
         sleep(10);
 
