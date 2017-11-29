@@ -20,6 +20,8 @@ void handler(int signum) {
 void handler_realTime(int signum, siginfo_t *si, void *data){
     if (signum == SIGRTMIN + 5) {
         printf("RealTime Signal %d intercepted. Data: %p\n", si->si_value.sival_int, data);
+        signal(SIGRTMIN + 5, SIG_DFL);
+
     }
 }
 
@@ -54,7 +56,7 @@ int main() {
 
         sleep(10);
         // SENDING REAL TIME SIGNAL
-        sigqueue(getppid(), SIGINT, v);
+        sigqueue(getppid(), SIGRTMIN + 5, v);
         printf("RT signal was sent\n");
         sleep(10);
 
@@ -65,7 +67,7 @@ int main() {
         if (sigismember(&set, SIGUSR1)){
             puts("SIGUSR1 is pending");
         }
-        if (sigismember(&set, SIGINT)){
+        if (sigismember(&set, SIGRTMIN + 5)){
             puts("RT Signal is pending");
         }
         sigprocmask(SIG_UNBLOCK, &signalset, NULL);

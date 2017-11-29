@@ -1,0 +1,6 @@
+vagrant ssh
+
+cd /vagrant_data
+
+vagrant suspend
+vagrant resume
