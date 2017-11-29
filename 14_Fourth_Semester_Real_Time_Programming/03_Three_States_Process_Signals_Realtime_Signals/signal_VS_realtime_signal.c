@@ -56,7 +56,7 @@ int main() {
 
         sleep(10);
         // SENDING REAL TIME SIGNAL
-        sigqueue(getppid(), SIGRTMIN + 5, v);
+        sigqueue(getpid(), SIGRTMIN + 5, v);
         printf("RT signal was sent\n");
         sleep(10);
 
