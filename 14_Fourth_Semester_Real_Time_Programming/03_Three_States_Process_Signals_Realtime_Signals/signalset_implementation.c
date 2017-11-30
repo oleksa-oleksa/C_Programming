@@ -26,26 +26,39 @@ typedef struct sigNode_t {
     struct sigNode_t *right;
 } sigNode;
 
-static sigNode *root = NULL;
+typedef struct tree_t {
+    sigNode *node;
+} tree;
+
+tree *root = NULL;
+
+void print(sigNode *root) {
+  puts("A");
+  if(root == NULL) return;
+    if(root->left) print(root->left);
+    printf("%d\n", root->signo);
+    if(root->right) print(root->right);
+}
+
 
 /* Creates a new tree if necessary
  */
-void my_sigaddset(int new_signo, sigNode *leaf) {
+void my_sigaddset(int new_signo, tree *root) {
     if(leaf == NULL)
     {
-        leaf = malloc(sizeof(sigNode));
-        leaf->signo = new_signo;
+        root = malloc(sizeof(sigNode));
+        root->node->signo = new_signo;
         /* initialize the children to null */
-        leaf->left = NULL;
-        leaf->right = NULL;
+        root->node->left = NULL;
+        root->node->right = NULL;
     }
-    else if(new_signo < leaf->signo)
+    else if(new_signo < root->node->signo)
     {
-        my_sigaddset(new_signo, leaf->left);
+        my_sigaddset(new_signo, root->left);
     }
-    else if(new_signo > leaf->signo)
+    else if(new_signo > root->node->signo)
     {
-        my_sigaddset(new_signo, leaf->right);
+        my_sigaddset(new_signo, root->node->right);
     }
 }
 
@@ -59,10 +72,11 @@ void my_sigemptyset(sigNode *leaf)
     }
 }
 
-void my_sigfillset(sigNode *root){
+sigNode *my_sigfillset(sigNode *root){
     for(int i = 1; i <= 31; i++){
         my_sigaddset(i, root);
     }
+    return root;
 }
 
 int my_sigismember(int new_signo, sigNode *leaf)
@@ -176,7 +190,7 @@ int main() {
 
         switch (choice) {
             case 1:
-                my_sigfillset(root);
+                root = my_sigfillset(root);
                 printf("Signals 1 - 31 were added in a set.\n");
                 waitForEnter();
                 break;
@@ -184,6 +198,7 @@ int main() {
                 signo = readSigno();
                 my_sigaddset(signo, root);
                 printf("Signal %d was added in a set.\n", signo);
+                print(root);
                 waitForEnter();
                 break;
             case 3:
