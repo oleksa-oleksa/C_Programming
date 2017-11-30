@@ -1,0 +1,17 @@
+If you were to look at how a struct stores its values, it would be something like this:
+
+|0---1---2---3---|4---|5---6---7---8---|
+|ffffffffffffffff|    |                | <- f: Where your float is stored
+|                |cccc|                | <- c: Where your char is stored
+|                |    |aaaaaaaaaaaaaaaa| <- a: Where your int is stored
+So when you change the value of f, you are actually changing bytes 0-3. When you change your char, you are actually changing byte 4. When you change your int, you are actually changing bytes 5-8.
+
+If you now look at how a union stores its values, it would be something like this:
+
+|0---1---2---3---|
+|ffffffffffffffff| <- f: where your float is stored
+|cccc------------| <- c: where your char is stored
+|aaaaaaaaaaaaaaaa| <- a: where your int is stored
+So now, when I change the value of f, I am changing bytes 0-3. Since c is stored in byte 0, when you change f, you also change c and a! When you change c, you're changing part of f and a - and when you change a, you're changing c and f. That's where your "overwriting" is happening. When you pack the 3 values into the one memory address, you're not "saving space" at all; you're just creating 3 different ways of looking at and changing the same data. You don't really have an int, a float, and a char in that union - at the physical level, you've just got 32 bits, which could be viewed as an int, a float, or a char. Changing one is meant to change the others. If you don't want them to change each other, then use a struct.
+
+This is why gcc tells you that your struct is 9 bytes long, while your union is only 4 - it's not saving space - it's just that structs and unions are not the same thing.
