@@ -16,6 +16,12 @@ svss: signal_VS_realtime_signal.o
 sset: signalset_implementation.o
 	$(CC) $(CFLAGS) tools.c menu.c signalset_implementation.c -o signalset_implementation
 
+
+sset2: signalset_with_binary_tree.o
+	$(CC) $(CFLAGS) tools.c menu.c signalset_with_binary_tree.c -o signalset_with_binary_tree
+
+
+
 # my libs
 menu: menu.o
 	$(CC) $(CFLAGS) menu.c -o menu
