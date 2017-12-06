@@ -1,16 +1,16 @@
 // Created by Oleksandra Baga on 29.11.17.
 /* Task: Implement the functions from Standard C Library:
- sigemptyset() - initializes a signal set to be empty.
- sigfillset() - initializes a signal set to contain all signals.
- sigaddset() - adds the specified signal signo to the signal set.
- sigdelset() - deletes the specified signal signo from the signal set.
- sigismember() - returns whether a specified signal signo is contained in
-     the signal set.
- There are 32 signals to handle with
+   sigemptyset() - initializes a signal set to be empty.
+   sigfillset() - initializes a signal set to contain all signals.
+   sigaddset() - adds the specified signal signo to the signal set.
+   sigdelset() - deletes the specified signal signo from the signal set.
+   sigismember() - returns whether a specified signal signo is contained in
+   the signal set.
+   There are 32 signals to handle with
 
- // Remark for myself: There are two ways to initialize a signal set.
- You can initially specify it to be empty with sigemptyset and then add specified signals individually.
- Or you can specify it to be full with sigfillset and then delete specified signals individually.
+   // Remark for myself: There are two ways to initialize a signal set.
+   You can initially specify it to be empty with sigemptyset and then add specified signals individually.
+   Or you can specify it to be full with sigfillset and then delete specified signals individually.
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,7 +32,7 @@ typedef struct {
 
 int readSigno();
 int my_sigdelset(int signo, tree *t);
-int my_sigdelnode(int signo, sigNode *root);
+sigNode *my_sigdelnode(int signo, sigNode *root);
 sigNode *getMinNode(sigNode *leaf);
 int my_sigismember(int signo, tree *t);
 int my_sigisnode(int signo, sigNode *root);
@@ -43,7 +43,7 @@ void add_node(sigNode *leaf, sigNode *root);
 void print_tree(tree *t);
 
 
-        void print_node(sigNode *root) {
+void print_node(sigNode *root) {
     if(root == NULL){
         return;
     }
@@ -61,17 +61,21 @@ void print_tree(tree *t) {
 }
 
 
-void add_node(sigNode *leaf, sigNode *root) {
+void add_node(sigNode *leaf, sigNode *root)
+{
 
-    while (root != NULL) {
-        if (leaf->signo > root->signo)
+    while (1) {
+        if (leaf->signo == root->signo) {
+            return;
+        }
+        else if (leaf->signo > root->signo) {
             if (root->right) {
                 root = root->right;
             } else {
                 root->right = leaf;
                 return;
             }
-        else {
+        } else {
             if (root->left) {
                 root = root->left;
             } else {
@@ -105,14 +109,14 @@ void my_sigemptyset(tree *t)
 {
     if(t != NULL )
     {
-        for(int i = 31; i <= 0; i--){
-            my_sigdelnode(i, t->root);
+        for(int i = 0; i < 32; i++){
+            t->root = my_sigdelnode(i, t->root);
         }
     }
 }
 
 void my_sigfillset(tree *root) {
-    for(int i = 1; i <= 31; i++){
+    for(int i = 0; i <= 31; i++){
         my_sigaddset(i, root);
     }
 }
@@ -122,16 +126,12 @@ int my_sigisnode(int signo, sigNode *root)
     while (root != NULL){
         if (signo < root->signo){
             root = root->left;
-        }
+        } else
         if (signo > root->signo){
             root = root->right;
-        }
-        if (signo == root->signo){
+        } else {
             return 1;
         }
-        else
-            return 0;
-
     }
     return 0;
 }
@@ -158,59 +158,45 @@ sigNode *getMinNode(sigNode *leaf){
 
 }
 
-int my_sigdelnode(int signo, sigNode *root) {
-    if (root == NULL){
-        return 0;
-    }
-    // signai is not supported
-    if (root->signo <= 0 || root->signo > 31) {
-        return -1;
-    }
-    while (root != NULL) {
-        if (signo < root->signo) {  // data is in the left sub tree.
-            root = root->left;
-        }
-        if (signo > root->signo) {  // data is in the right sub tree.
-            root = root->right;
-        }
-        if (signo == root->signo) {
-            // case 1: no children
-            if (root->left == NULL && root->right == NULL) {
-                free(root);
-            }
-                // case 2: one child (right)
-            else if (root->left == NULL && root->right != NULL) {
-                sigNode *temp = root; // save current node as a backup
-                root = root->right;
-                free(temp);
-            }
-                // case 3: one child (left)
-            else if (root->right == NULL && root->left != NULL) {
-                sigNode *temp = root; // save current node as a backup
-                root = root->left;
-                free(temp);
-            }
-                // case 4: two children
-            else {
-                sigNode *minNode = getMinNode(
-                        root->right); // find minimal value of right sub tree - new root for a sub-tree
-                sigNode *temp = root; // node-to-be-deleted
-                root->signo = minNode->signo; // duplicate the node
-                free(minNode);
-                free(temp);
-                return 0;
-            }
+sigNode *my_sigdelnode(int signo, sigNode *root){
+
+    if (root == NULL)
+        return NULL;
+
+    if (signo < root->signo) {
+        return my_sigdelnode(signo, root->left);
+    } else if (signo > root->signo) {
+        return my_sigdelnode(signo, root->right);
+    } else {
+
+        sigNode *l = root->left;
+        sigNode *r = root->right;
+
+
+        if (!r && !l) {
+            free(root);
+            return NULL;
+        } else if (l && !r) {
+            free(root);
+            return l;
+        } else if (r && !l) {
+            free(root);
+            return r;
+        } else {
+            sigNode *succ = getMinNode(r);
+            root->signo = succ->signo;
+            root->right = my_sigdelnode(succ->signo, r);
+            return root;
         }
     }
-    return 0;
 }
 
 int my_sigdelset(int signo, tree *t){
     if (t == NULL) {
         return 0;
-    }
-    else {
-        return my_sigdelnode(signo, t->root);
+    } else {
+        my_sigdelnode(signo, t->root);
+        return 1;
     }
 }
 
@@ -241,11 +227,12 @@ int main() {
                     "Delete all signals from a set",
                     "Delete a signal from a set",
                     "Check if a signal in a set",
+                    "Print signals",
                     "Exit"};
 
     do {
         clearScreen();
-        choice = getMenu("Signal Set Management", Menu, 6);
+        choice = getMenu("Signal Set Management", Menu, 7);
         switch (choice) {
             case 1:
                 my_sigfillset(&t);
@@ -260,7 +247,7 @@ int main() {
                 waitForEnter();
                 break;
             case 3:
-                //my_sigemptyset(t->root);
+                my_sigemptyset(&t);
                 printf("Signal set is empty.\n");
                 waitForEnter();
                 break;
@@ -282,11 +269,15 @@ int main() {
                 }
                 break;
             case 6:
+                print_tree(&t);
+                waitForEnter();
+                break;
+            case 7:
                 break;
         }
-
-    } while (choice != 6);
+    } while (choice != 7);
 
     return EXIT_SUCCESS;
 }
+
 
