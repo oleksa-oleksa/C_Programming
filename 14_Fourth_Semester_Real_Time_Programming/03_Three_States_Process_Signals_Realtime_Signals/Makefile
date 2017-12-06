@@ -13,14 +13,15 @@ prsim: process_simulation.c
 svss: signal_VS_realtime_signal.o
 	$(CC) $(CFLAGS) signal_VS_realtime_signal.c -o signal_VS_realtime_signal
 
-sset: signalset_implementation.o
-	$(CC) $(CFLAGS) tools.c menu.c signalset_implementation.c -o signalset_implementation
+sset: signalset_with_signal_mask.o
+	$(CC) $(CFLAGS) tools.c menu.c signalset_with_signal_mask.c -o signalset_with_signal_mask
 
 
 sset2: signalset_with_binary_tree.o
 	$(CC) $(CFLAGS) tools.c menu.c signalset_with_binary_tree.c -o signalset_with_binary_tree
 
-
+childwait: childwait.o
+	$(CC) $(CFLAGS) childwait.c -o childwait
 
 # my libs
 menu: menu.o
