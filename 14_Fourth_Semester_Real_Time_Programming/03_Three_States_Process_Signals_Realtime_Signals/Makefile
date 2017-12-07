@@ -1,34 +1,24 @@
 CFLAGS += -W -Wall
-all: queue process prsim svss sset menu tools
+all: queue process process_simulation signal_VS_realtime_signal signalset_with_binary_tree menu tools
 
-queue: queue.o
-	$(CC) $(CFLAGS) queue.c -o queue
+queue:
 
-process: process.o
-	$(CC) $(CFLAGS) process.c -o process
+process:
 
-prsim: process_simulation.c
-	$(CC) $(CFLAGS) tools.c process.c queue.c processmodel.c process_simulation.c -o process_simulation
+process_simulation: tools.c process.c queue.c processmodel.c 
 
-svss: signal_VS_realtime_signal.o
-	$(CC) $(CFLAGS) signal_VS_realtime_signal.c -o signal_VS_realtime_signal
+signal_VS_realtime_signal:
 
-sset: signalset_with_signal_mask.o
-	$(CC) $(CFLAGS) tools.c menu.c signalset_with_signal_mask.c -o signalset_with_signal_mask
+signalset_with_signal_mask: tools.c menu.c 
 
+signalset_with_binary_tree: tools.c menu.c
 
-sset2: signalset_with_binary_tree.o
-	$(CC) $(CFLAGS) tools.c menu.c signalset_with_binary_tree.c -o signalset_with_binary_tree
-
-childwait: childwait.o
-	$(CC) $(CFLAGS) childwait.c -o childwait
+childwaiti:
 
 # my libs
-menu: menu.o
-	$(CC) $(CFLAGS) menu.c -o menu
+menu:
 
-tools: tools.o
-	$(CC) tools.c -o tools
+tools:
 
 clean:
 	$(RM) *.o 
