@@ -5,11 +5,17 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <signal.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
+#define STATE_WAITING 1
+#define STATE_OCCUPIED 2
 
 /* adjacency matrix is a square matrix used to represent a finite graph.
  * The elements of the matrix indicate whether pairs of vertices are adjacent or not in the graph.*/
 
-int read_matrix(char *file_name, int **matrix, int *threads, int *resources)
+int read_matrix(char *file_name, int **matrix, int *resources, int *threads)
 {
     FILE *f = fopen(file_name, "rt");
 
@@ -23,12 +29,12 @@ int read_matrix(char *file_name, int **matrix, int *threads, int *resources)
     int r, t, idx;
     int *m;
 
-    fscanf(f, "%i\n", &t);
     fscanf(f, "%i\n", &r);
+    fscanf(f, "%i\n", &t);
 
     // allocate space for adjacency matrix for the graph
     // of size r*c and access elements using pointer arithmetic.
-    m = (int*)malloc(sizeof(int)*(r + t)*(t + r));
+    m = (int*)malloc(sizeof(int)*r*t);
     memset(m, 0, sizeof(int)*r*t);
 
     if (!m) {
@@ -47,22 +53,22 @@ int read_matrix(char *file_name, int **matrix, int *threads, int *resources)
         if (state == 'o') {
             // 'o' means first element is resource and second is thread
             // idx contains a one-dimensional offset equal to two-dimensional matrix address
-            // t + r = to reach resources-part of the matrix
-            idx = (t + r) * t + a * (t + r) + b;
-            m[idx] = 1;
+            // it means (resource number * resources count) + thread number
+            idx = a*r+b;
+            m[idx] = STATE_OCCUPIED;
 
         } else if (state == 'w') {
             // 'w' means first element is thread and second is resource
             // Note reversed values in idx, that's because o and w has reversed arguments
-            idx = a * (t + r) + t + b;
-            m[idx] = 1;
+            idx = b*r+a;
+            m[idx] = STATE_WAITING;
         } else {
             printf("Invalid line, aborting\n");
             return -1;
         }
     }
-    *threads = t + r;
-    *resources = r + t;
+    *threads = r;
+    *resources = t;
     *matrix = m;
 
     return 0;
