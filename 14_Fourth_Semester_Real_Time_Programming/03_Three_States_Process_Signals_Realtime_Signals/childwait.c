@@ -19,6 +19,13 @@ void signal_childHandler() {
     printf("Child %d: terminated (n = %d)\n", pid, n);
 }
 
+void child_process()
+{
+    while (1) {
+        sleep(1);
+    }
+}
+
 int main(int args, char *argv[]) {
 
     if (args != 2) {
@@ -29,25 +36,33 @@ int main(int args, char *argv[]) {
     signal(SIGCHLD, signal_childHandler);
 
     int k = atoi(argv[1]);
+    int ppid = getpid();
+
     pid_t pids[k];
 
-    if (k > 0) {
-        for (int i = 0; i < k; i++) {
-            n += 1;
-            pids[i] = fork();
-            if (pids[i] == FAILURE) {
-                perror("fork() failed\n");
-            } else if (pids[i] == CHILD) {
-                printf("Child %d: started (n = %d)\n", getpid(), n);
-                sleep(1);
-                EXIT_SUCCESS;
-            }
-            else if (pids[i] > CHILD){
-                printf("Parent %d: sleep(2)\n", getpid());
-                sleep(2);
-            }
+    if (k <= 0)
+        return -1;
+
+    for (int i = 0; i < k; i++) {
+        pids[i] = fork();
+
+        if (pids[i] == FAILURE) {
+            perror("fork() failed");
+        } else if (pids[i] == CHILD) {
+            child_process();
+        } else {
+            n++;
+            printf("Child %d: started (n = %d)\n", pids[i], n);
         }
+
     }
-    EXIT_SUCCESS;
+
+    while (n > 0) {
+        printf("Parent %d: sleep\n", ppid);
+        sleep(2);
+
+    }
+
+    return EXIT_SUCCESS;
 }
 
