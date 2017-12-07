@@ -12,11 +12,11 @@
 int n = 0;
 
 void signal_childHandler() {
-    pid_t pid = 0;
-    n -= 1; // decrement if child dies
-    pid = wait(NULL);
-    printf("Child %d: terminated (n = %d)\n", pid, n);
+    pid_t pid;
 
+    pid = wait(NULL);
+    n -= 1;
+    printf("Child %d: terminated (n = %d)\n", pid, n);
 }
 
 int main(int args, char *argv[]) {
@@ -33,6 +33,7 @@ int main(int args, char *argv[]) {
 
     if (k > 0) {
         for (int i = 0; i < k; i++) {
+            n += 1;
             pids[i] = fork();
             if (pids[i] == FAILURE) {
                 perror("fork() failed\n");
@@ -41,13 +42,12 @@ int main(int args, char *argv[]) {
                 sleep(1);
                 EXIT_SUCCESS;
             }
-            n += 1;
+            else if (pids[i] > CHILD){
+                printf("Parent %d: sleep(2)\n", getpid());
+                sleep(2);
+            }
         }
     }
-    do {
-        printf("Parent %d: sleep(2)\n", getpid());
-        sleep(2);
-    } while (!n);
     EXIT_SUCCESS;
 }
 
