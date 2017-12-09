@@ -67,36 +67,35 @@ int read_matrix(char *file_name, int **matrix, int *threads, int *resources)
             return -1;
         }
     }
-    *threads = t;
-    *resources = r;
+    *threads = t + r;
+    *resources = r + t;
     *matrix = m;
 
     return 0;
 }
-//                       0                          6
-int dfs(int *matrix, int i, marked *visited, int len){
+
+int dfs(int **matrix, int i, marked *visited, int len){
     int isGray;
     int j;
     for (j = 0; j < len; j++ ) {
-        if (matrix[i * len + j] == 1) {
+        if (*(*matrix + i + j) == 1) {
             switch (visited[j]) {
                 case WHITE:
-                    (visited[j] = GRAY);
-                    isGray = dfs(matrix, j, visited, len);
-                    if (isGray) {
-                        return 1;
-                    }
-                    break;
+                    return (visited[j] = GRAY);
                 case GRAY:
                     return 1;
                 case BLACK:
                     return 0;
                 default:
-                    return 0;
+                    break;
             }
         }
+        isGray = dfs(matrix, j * len, visited, len);
+        if (isGray) {
+            return 1;
+        }
+        dfs(matrix, j * len, visited, len);
     }
-
     visited[j] = BLACK;
     return 0;
 }
@@ -119,25 +118,27 @@ int main(int argc, char **argv)
     int len = threads + resources;
     marked visited[len];
 
-    // arr[i][j] is same as *(*(arr+i)+j)
-    for (int i = 0; i < len; i++){
-        for (int j = 0; j < len; j++){
-            printf("%d ", *(matrix + i*len + j));
+    // Note that arr[i][j] is same as *(*(arr+i)+j)
+    for (int i = 0; i < resources; i++){
+        for (int j = 0; j < threads; j++){
+            printf("%d ", *(matrix + i*threads + j));
         }
         printf("\n");
     }
 
-     // Deep-first search
+  /*  // Deep-first search
     // 1. Marks all nodes in white
-    memset(visited, 0, sizeof(int)*len);
-
-      // 2. Search
-    for (int i = 0; i < len; i += 1){
-        isFound = dfs(matrix, i, visited, len);
-        if (isFound) {
-            printf("Deadlock found!\n");
-            return 1;
-        }
+    for (int i = 0; i < resources + threads; i++){
+            visited[i] = 0;
     }
+
+    // 2. Search
+    for (int i = 0; i < len*len; i += len){
+            isFound = dfs(&matrix, i, visited, len);
+            if (isFound) {
+                printf("Deadlock found!\n");
+                return 1;
+            }
+    }*/
     return 0;
 }
