@@ -13,7 +13,9 @@ signalset_with_signal_mask: tools.c menu.c
 
 signalset_with_binary_tree: tools.c menu.c
 
-childwaiti:
+childwait:
+
+sum_of_all_digits: sum_of_digits.c
 
 # my libs
 menu:
