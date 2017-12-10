@@ -17,6 +17,8 @@ childwait:
 
 sum_of_all_digits: sum_of_digits.c
 
+sum_of_all_digits_realtime_signal: sum_of_digits.c
+
 # my libs
 menu:
 

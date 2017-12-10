@@ -38,7 +38,7 @@ int main() {
     // No Real Time Signal Support on MacOS
 
     union sigval v;
-    v.sival_int = 10;
+    v.sival_int = 36;
 
     // Regular Signal Settings
     sigset_t signalset;
