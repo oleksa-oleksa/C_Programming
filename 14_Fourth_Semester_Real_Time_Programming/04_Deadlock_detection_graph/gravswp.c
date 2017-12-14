@@ -6,6 +6,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+
+
 typedef enum {
     WHITE = 0,
     GRAY = 1,
@@ -14,6 +16,42 @@ typedef enum {
 
 /* adjacency matrix is a square matrix used to represent a finite graph.
  * The elements of the matrix indicate whether pairs of vertices are adjacent or not in the graph.*/
+
+void plot_graph(int *matrix, int threads, int resources) {
+
+    FILE *dot = fopen("dot_graph.dot", "wt");
+    fprintf(dot, "digraph {\n");
+    for (int i = 1; i <= threads; i++) {
+        fprintf(dot, "t%d [style=filled, fillcolor=\"green\"];\n", i);
+    }
+    for (int i = 1; i <= resources; i++) {
+        fprintf(dot, "r%d [shape=box, style=filled, fillcolor=\"orange\"];\n", i);
+    }
+    int len = threads + resources;
+    for (int i = 0; i < len; i++) {
+        for (int j = 0; j < len; j++) {
+            if (matrix[i * len + j] == 0) {
+                continue;
+            }
+            if (i < threads){
+                fprintf(dot, "t%d", i + 1);
+            }
+            else {
+                fprintf(dot, "r%d", i - threads);
+            }
+            fprintf(dot, "->");
+            if (j < threads){
+                fprintf(dot, "t%d", j + 1);
+            }
+            else {
+                fprintf(dot, "r%d", j - threads);
+            }
+            fprintf(dot, ";\n");
+        }
+    }
+    fprintf(dot, "}");
+    fclose(dot);
+}
 
 int read_matrix(char *file_name, int **matrix, int *threads, int *resources)
 {
@@ -30,6 +68,7 @@ int read_matrix(char *file_name, int **matrix, int *threads, int *resources)
     int *m;
 
     fscanf(f, "%i\n", &t);
+
     fscanf(f, "%i\n", &r);
 
     // allocate space for adjacency matrix for the graph
@@ -127,10 +166,9 @@ int main(int argc, char **argv)
         printf("\n");
     }
 
-     // Deep-first search
-    // 1. Marks all nodes in white
+    plot_graph(matrix, threads, resources);
 
-      // 2. Search
+    // 2. Search
     for (int i = 0; i < len; i += 1){
         memset(visited, 0, sizeof(int)*len);
         isFound = dfs(matrix, i, visited, len);
