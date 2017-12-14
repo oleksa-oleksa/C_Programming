@@ -97,7 +97,7 @@ int dfs(int *matrix, int i, marked *visited, int len){
         }
     }
 
-    visited[j] = BLACK;
+    visited[i] = BLACK;
     return 0;
 }
 
@@ -111,7 +111,7 @@ int main(int argc, char **argv)
     int *matrix;
     int resources, threads, isFound;
 
-    if (read_matrix(argv[1], &matrix, &resources, &threads) != 0) {
+    if (read_matrix(argv[1], &matrix, &threads, &resources) != 0) {
         return -2;
     }
     printf("Successfully parsed.\n");
@@ -127,10 +127,7 @@ int main(int argc, char **argv)
         printf("\n");
     }
 
-     // Deep-first search
-    // 1. Marks all nodes in white
-
-      // 2. Search
+    // 2. Search
     for (int i = 0; i < len; i += 1){
         memset(visited, 0, sizeof(int)*len);
         isFound = dfs(matrix, i, visited, len);

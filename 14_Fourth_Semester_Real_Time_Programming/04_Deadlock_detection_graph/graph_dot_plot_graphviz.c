@@ -6,8 +6,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-
-
 typedef enum {
     WHITE = 0,
     GRAY = 1,
@@ -138,7 +136,7 @@ int dfs(int *matrix, int i, marked *visited, int len){
         }
     }
 
-    visited[j] = BLACK;
+    visited[i] = BLACK;
     return 0;
 }
 
