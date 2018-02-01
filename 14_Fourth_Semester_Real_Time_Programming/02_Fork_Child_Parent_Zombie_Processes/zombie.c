@@ -34,7 +34,7 @@ int main(int args, char *argv[]) {
         for (int i = 0; i < k; i++) {
             pids[i] = fork();
 
-            if (pids[i] < FAILURE) {
+            if (pids[i] == FAILURE) {
                 perror("fork() failed\n");
 
             } else if (pids[i] == CHILD) {
