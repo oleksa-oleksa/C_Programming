@@ -20,7 +20,7 @@ void createTestProcesses(TProcess **processes, int processNumber){
 void addTestProcessIntoQueue(TQueue *queue, TProcess **processes, int processNumber){
     for (int i = 0; i < processNumber; i++) {
         q_add(queue, processes[i]);
-    }
+    } 
     printf("%d demo processes were added into queue\n", AMOUNT_OF_PROCESSES);
     q_print(queue);
     waitForEnter();
