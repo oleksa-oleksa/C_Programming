@@ -1,5 +1,5 @@
 # C_Programming
-Different C tasks that I did studying C language SS2016 - WS17/18. From the first steps to the real time and network programming for Unix.
+Studying C language SS2016 - WS17/18. From the first steps to the real time and network programming for Unix.
 
 - Tasks for leetcode.com
 - Appointment managemt program using double linked lists and pointers 
