@@ -1,3 +1,0 @@
-This is a first text for testing how append programm works
-Today is Friday, in two weeks I have exam
-This is a new line in the first file

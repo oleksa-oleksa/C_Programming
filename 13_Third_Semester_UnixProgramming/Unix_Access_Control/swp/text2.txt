@@ -1,3 +1,0 @@
-This is a second file for testing. This line should be a first line after the append program had worked.
-Today is a cloudy day.
-After this line tne appanded text should appear.
