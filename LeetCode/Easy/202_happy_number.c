@@ -53,7 +53,7 @@ bool isHappy(int n)
 
 	} while (n != 0);
 
-	if (sum == 1 || sum == 7)
+	if (sum == 1)
 	{
 		printf("This number is HAPPY\n");
 		return 1; 

@@ -21,6 +21,9 @@ void GetTextLine (char *s)
 	{
 
 		CheckInput = scanf("%[^\n]", s);
+		/* the %[^\n] conversion specification, which matches a string of all characters 
+		not equal to the new line character ('\n') 
+		and stores it (plus a terminating '\0' character) in s */
 		ClearBuffer();
 
 		if (*s == '\n')

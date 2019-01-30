@@ -38,7 +38,11 @@ int main ()
 int addDigits(int num)
 {
 	
-	num = 1 + ((num -1) % 9);
+	/* The Equivalence of Digit Sum Arithmetic
+	with Modular 9 Arithmetic used to solve the problem
+	http://www.applet-magic.com/Digitsum00.htm */
+	
+	num = 1 + ((num - 1) % 9);
 	return num;
 }
 
