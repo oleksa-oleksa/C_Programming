@@ -1,21 +1,30 @@
-#include <stdio.h>
-#include "functions.h"
+/* Write a function that reverses a string. The input string is given as an array of characters char[].
 
-int main ()
+Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+
+You may assume all the characters consist of printable ascii characters.*/
+
+char* reverseString(char *s)
 {
-	char s[100];
+	int i;
+	char *tmpLast = s; 
+	char CopyItem;
+	char *tmpFirst = tmpLast;
 
-	do
+	while (*tmpLast)
+		tmpLast++; 
+	tmpLast--;
+
+	while (tmpFirst < tmpLast)
 	{
-		printf("Please type a text line and press Enter\n");
-		GetTextLine(s);
-		reverseString(s);
-		printf("%s\n", s);
-	} while (askAgain());
-
-
-
-	return 0;
+		
+		CopyItem = *tmpFirst;
+		*tmpFirst = *tmpLast;
+		*tmpLast = CopyItem;
+		tmpFirst++;
+		tmpLast--;
+	}
+	
+	return s;
+	
 }
-
-
